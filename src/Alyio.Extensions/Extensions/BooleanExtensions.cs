@@ -21,8 +21,7 @@ namespace Alyio.Extensions
         {
             if (value == null) { return false; }
             if (typeof(bool).Equals(value.GetType())) { return (bool)value; }
-            var converter = value as IConvertible;
-            if (converter != null)
+            if (value is IConvertible converter)
             {
                 try
                 {
@@ -64,8 +63,7 @@ namespace Alyio.Extensions
         /// <returns>true if value is equal to <see cref="System.Boolean.TrueString"/> or false if value is equal to <see cref="System.Boolean.FalseString"/>, otherwise false.</returns>
         public static bool ToBoolean(this string s)
         {
-            bool result;
-            if (bool.TryParse(s, out result))
+            if (bool.TryParse(s, out bool result))
             {
                 return result;
             }

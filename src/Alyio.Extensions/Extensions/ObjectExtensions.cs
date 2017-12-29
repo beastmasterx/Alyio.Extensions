@@ -22,10 +22,17 @@ namespace Alyio.Extensions
         /// <returns>A 32-bit signed integer equivalent to value, or null if value is null or was not converted successfully.</returns>
         public static int? ToInt32(this object value)
         {
-            if (value == null) { return null; }
-            if (typeof(int).Equals(value.GetType())) { return (int)value; }
-            var converter = value as IConvertible;
-            if (converter != null)
+            if (value == null)
+            {
+                return null;
+            }
+
+            if (typeof(int).Equals(value.GetType()))
+            {
+                return (int)value;
+            }
+
+            if (value is IConvertible converter)
             {
                 try
                 {
@@ -51,10 +58,17 @@ namespace Alyio.Extensions
         /// <returns>A 64-bit signed integer equivalent to value, or null if value is null or was not converted successfully.</returns>
         public static long? ToInt64(this object value)
         {
-            if (value == null) { return null; }
-            if (typeof(long).Equals(value.GetType())) { return (long)value; }
-            var converter = value as IConvertible;
-            if (converter != null)
+            if (value == null)
+            {
+                return null;
+            }
+
+            if (typeof(long).Equals(value.GetType()))
+            {
+                return (long)value;
+            }
+
+            if (value is IConvertible converter)
             {
                 try
                 {
@@ -80,10 +94,17 @@ namespace Alyio.Extensions
         /// <returns>A double-precision floating-point number equivalent to value, or null if value is null or was not converted successfully.</returns>
         public static double? ToDouble(this object value)
         {
-            if (value == null) { return null; }
-            if (typeof(double).Equals(value.GetType())) { return (double)value; }
-            var converter = value as IConvertible;
-            if (converter != null)
+            if (value == null)
+            {
+                return null;
+            }
+
+            if (typeof(double).Equals(value.GetType()))
+            {
+                return (double)value;
+            }
+
+            if (value is IConvertible converter)
             {
                 try
                 {
@@ -109,10 +130,17 @@ namespace Alyio.Extensions
         /// <returns>A decimal number equivalent to value, or null if value is null or was not converted successfully.</returns>
         public static decimal? ToDecimal(this object value)
         {
-            if (value == null) { return null; }
-            if (typeof(decimal).Equals(value.GetType())) { return (decimal)value; }
-            var converter = value as IConvertible;
-            if (converter != null)
+            if (value == null)
+            {
+                return null;
+            }
+
+            if (typeof(decimal).Equals(value.GetType()))
+            {
+                return (decimal)value;
+            }
+
+            if (value is IConvertible converter)
             {
                 try
                 {
@@ -138,10 +166,17 @@ namespace Alyio.Extensions
         /// <returns>The date and time equivalent of the value of value, or null if value is null or was not converted successfully.</returns>
         public static DateTime? ToDateTime(this object value)
         {
-            if (value == null) { return null; }
-            if (typeof(DateTime).Equals(value.GetType())) { return (DateTime)value; }
-            var converter = value as IConvertible;
-            if (converter != null)
+            if (value == null)
+            {
+                return null;
+            }
+
+            if (typeof(DateTime).Equals(value.GetType()))
+            {
+                return (DateTime)value;
+            }
+
+            if (value is IConvertible converter)
             {
                 try
                 {

@@ -14,8 +14,7 @@ namespace Alyio.Extensions
         /// <returns>A 32-bit signed integer that is equivalent to the number in value, or null if value is null or was not converted successfully.</returns>
         public static int? ToInt32(this string value)
         {
-            int result;
-            if (int.TryParse(value, out result))
+            if (int.TryParse(value, out int result))
             {
                 return result;
             }
@@ -32,8 +31,7 @@ namespace Alyio.Extensions
         /// <returns>A 64-bit signed integer that is equivalent to the number in value, or null if value is null or was not converted successfully.</returns>
         public static long? ToInt64(this string value)
         {
-            long result;
-            if (long.TryParse(value, out result))
+            if (long.TryParse(value, out long result))
             {
                 return result;
             }
@@ -50,8 +48,7 @@ namespace Alyio.Extensions
         /// <returns>A double-precision floating-point number that is equivalent to the number in value, or null if value is null was not converted successfully.</returns>
         public static double? ToDouble(this string value)
         {
-            double result;
-            if (double.TryParse(value, out result))
+            if (double.TryParse(value, out double result))
             {
                 return result;
             }
@@ -68,8 +65,7 @@ namespace Alyio.Extensions
         /// <returns>A decimal number that is equivalent to the number in value, or null if value is null or was not converted successfully.</returns>
         public static decimal? ToDecimal(this string value)
         {
-            decimal result;
-            if (decimal.TryParse(value, out result))
+            if (decimal.TryParse(value, out decimal result))
             {
                 return result;
             }
@@ -86,8 +82,7 @@ namespace Alyio.Extensions
         /// <returns>The date and time equivalent of the value of value, or null if value is null or was not converted successfully.</returns>
         public static DateTime? ToDateTime(this string value)
         {
-            DateTime dateTime;
-            if (DateTime.TryParse(value, out dateTime))
+            if (DateTime.TryParse(value, out DateTime dateTime))
             {
                 return dateTime;
             }
