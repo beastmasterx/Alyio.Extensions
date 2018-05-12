@@ -19,8 +19,16 @@ namespace Alyio.Extensions
         /// </returns>
         public static bool ToBoolean(this object value)
         {
-            if (value == null) { return false; }
-            if (typeof(bool).Equals(value.GetType())) { return (bool)value; }
+            if (value == null)
+            {
+                return false;
+            }
+
+            if (typeof(bool).Equals(value.GetType()))
+            {
+                return (bool)value;
+            }
+
             if (value is IConvertible converter)
             {
                 try
