@@ -17,11 +17,22 @@ namespace Alyio.Extensions.Tests
             {
                 bytes[j] = byte.Parse(HEX.Substring(i, 2), NumberStyles.HexNumber, CultureInfo.InvariantCulture);
             }
+
             var hex = bytes.ToHex();
 
             Assert.Equal(HEX, hex);
 
             Assert.Equal(hex.ToLowerInvariant(), LOWER_HEX);
+        }
+
+        [Fact]
+        public void TestNullByteArray()
+        {
+            var bytes = (byte[])null;
+
+            var hex = bytes.ToHex();
+
+            Assert.Null(hex);
         }
     }
 }
