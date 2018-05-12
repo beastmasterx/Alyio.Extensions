@@ -86,6 +86,7 @@ namespace Alyio.Extensions
             {
                 return dateTime;
             }
+            else
             {
                 return null;
             }
