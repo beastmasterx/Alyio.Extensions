@@ -1,18 +1,14 @@
-﻿using System.Text;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Caching.Distributed;
-using Newtonsoft.Json;
 
 namespace Alyio.Extensions.DistributedCache.Json
 {
     /// <summary>
     /// Extension methods for <see cref="IDistributedCache"/>.
     /// </summary>
-    public static class DistributedCacheExtensions
+    public static partial class DistributedCacheExtensions
     {
-        private static readonly JsonSerializerSettings _jsonSerializerSettings = new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore };
-
         /// <summary>
         /// 
         /// </summary>
@@ -82,18 +78,6 @@ namespace Alyio.Extensions.DistributedCache.Json
         {
             var bytes = Serialize<T>(value);
             return cache.SetAsync(key, bytes, options, token);
-        }
-
-
-        private static byte[] Serialize<T>(T data)
-        {
-            return Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(data, _jsonSerializerSettings));
-        }
-
-        private static T Deserialize<T>(byte[] bytes)
-        {
-            var jsonText = Encoding.UTF8.GetString(bytes);
-            return JsonConvert.DeserializeObject<T>(jsonText);
         }
     }
 }
