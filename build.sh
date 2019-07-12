@@ -9,14 +9,10 @@ if [ -d $artifactsFolder ]; then
   rm -R $artifactFolder
 fi
 
-dotnet restore
+dotnet build
 
-PROJECT_NAME="Alyio.Extensions"
-TEST_PROJECT_NAME="Alyio.Extensions.Tests"
+dotnet test
 
-dotnet test ./test/$TEST_PROJECT_NAME/$TEST_PROJECT_NAME.csproj -c Release -f netcoreapp2.0
-
-# dotnet build ./test/$TEST_PROJECT_NAME -c Release -f net451
 
 # mono \  
 # ./test/$TEST_PROJECT_NAME/bin/Release/net451/*/dotnet-test-xunit.exe \
