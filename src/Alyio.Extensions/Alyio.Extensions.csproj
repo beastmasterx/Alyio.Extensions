@@ -15,7 +15,7 @@
     <PackageId>Alyio.Extensions</PackageId>
     <PackageTags>Extensions;Methods;Conveter</PackageTags>
     <PackageProjectUrl>https://github.com/qqbuby/Alyio.Extensions</PackageProjectUrl>
-    <PackageLicenseUrl>https://raw.githubusercontent.com/qqbuby/Alyio.Extensions/dev/LICENSE</PackageLicenseUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/qqbuby/Alyio.Extensions</RepositoryUrl>
     <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
