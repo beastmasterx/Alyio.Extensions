@@ -9,7 +9,7 @@ namespace Alyio.Extensions.Tests
         public void ToUnix()
         {
             var secs = 1497002400L;
-            var u = secs.ToDateTime().Value.ToUnix();
+            var u = secs.ToDateTime()!.Value.ToUnix();
             Assert.Equal(1497002400L, u);
         }
     }

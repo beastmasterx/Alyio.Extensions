@@ -22,13 +22,13 @@ namespace Alyio.Extensions.Tests
 
             Assert.Equal(HEX, hex);
 
-            Assert.Equal(hex.ToLowerInvariant(), LOWER_HEX);
+            Assert.Equal(hex!.ToLowerInvariant(), LOWER_HEX);
         }
 
         [Fact]
         public void TestNullByteArray()
         {
-            var bytes = (byte[])null;
+            var bytes = (byte[]?)null;
 
             var hex = bytes.ToHex();
 
