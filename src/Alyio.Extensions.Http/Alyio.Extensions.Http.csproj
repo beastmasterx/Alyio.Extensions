@@ -2,6 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <LangVersion>10.0</LangVersion>
+    <Nullable>enable</Nullable>
     <VersionPrefix>3.0.2</VersionPrefix>
     <Copyright>Copyright (c) 2016 ROY</Copyright>
     <Description>Reading and logging the HTTP request message and the HTTP response message.</Description>
@@ -20,7 +22,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="2.0.0" />
-    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+    <!-- <PackageReference Include="System.Text.Json" Version="6.0.4" /> -->
     <PackageReference Include="System.Net.Http" Version="4.3.4" />
   </ItemGroup>
 </Project>

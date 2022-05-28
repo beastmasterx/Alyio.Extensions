@@ -80,7 +80,7 @@ namespace Alyio.Extensions.Http
 
             string requestRawMessage = await request.ReadRawMessageAsync(LoggingOptions.IgnoreRequestContent, LoggingOptions.IgnoreRequestHeaders);
 
-            HttpResponseMessage responseMessage = null;
+            HttpResponseMessage? responseMessage = null;
 
             try
             {
