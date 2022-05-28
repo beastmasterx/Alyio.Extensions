@@ -12,6 +12,7 @@
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <PackageId>Alyio.Extensions.Http</PackageId>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <IncludeSymbols>true</IncludeSymbols>
     <PackageTags>Extensions;Methods;HTTP;HttpRequestMessage;HttpResponseMessage;Logging</PackageTags>
     <PackageProjectUrl>https://github.com/qqbuby/Alyio.Extensions</PackageProjectUrl>
     <PackageReleaseNotes>Add HttpLoggingOptions.IsEnalbled option.</PackageReleaseNotes>
