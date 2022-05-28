@@ -16,7 +16,7 @@ namespace Alyio.Extensions.DistributedCache.Json
         /// <param name="cache"></param>
         /// <param name="key"></param>
         /// <returns></returns>
-        public static T Get<T>(this IDistributedCache cache, string key)
+        public static T? Get<T>(this IDistributedCache cache, string key)
         {
             var bytes = cache.Get(key);
             if (bytes == null)
@@ -25,7 +25,7 @@ namespace Alyio.Extensions.DistributedCache.Json
             }
             else
             {
-                return Deserialize<T>(bytes);
+                return DeserializeAsync<T>(bytes).Result;
             }
         }
 
@@ -37,7 +37,7 @@ namespace Alyio.Extensions.DistributedCache.Json
         /// <param name="key"></param>
         /// <param name="token"></param>
         /// <returns></returns>
-        public static async Task<T> GetAsync<T>(this IDistributedCache cache, string key, CancellationToken token = default)
+        public static async Task<T?> GetAsync<T>(this IDistributedCache cache, string key, CancellationToken token = default)
         {
             var bytes = await cache.GetAsync(key, token);
             if (bytes == null)
@@ -46,7 +46,7 @@ namespace Alyio.Extensions.DistributedCache.Json
             }
             else
             {
-                return Deserialize<T>(bytes);
+                return await DeserializeAsync<T>(bytes);
             }
         }
 
@@ -60,7 +60,7 @@ namespace Alyio.Extensions.DistributedCache.Json
         /// <param name="options"></param>
         public static void Set<T>(this IDistributedCache cache, string key, T value, DistributedCacheEntryOptions options)
         {
-            var bytes = Serialize<T>(value);
+            var bytes = SerializeAsync<T>(value).Result;
             cache.Set(key, bytes, options);
         }
 
@@ -76,7 +76,7 @@ namespace Alyio.Extensions.DistributedCache.Json
         /// <returns></returns>
         public static Task SetAsync<T>(this IDistributedCache cache, string key, T value, DistributedCacheEntryOptions options, CancellationToken token = default)
         {
-            var bytes = Serialize<T>(value);
+            var bytes = SerializeAsync<T>(value);
             return cache.SetAsync(key, bytes, options, token);
         }
     }

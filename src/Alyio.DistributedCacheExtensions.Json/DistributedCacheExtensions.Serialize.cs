@@ -1,6 +1,8 @@
-﻿using System.Text;
+﻿using System.IO;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using System.Threading.Tasks;
 using Microsoft.Extensions.Caching.Distributed;
-using Newtonsoft.Json;
 
 namespace Alyio.Extensions.DistributedCache.Json
 {
@@ -9,17 +11,20 @@ namespace Alyio.Extensions.DistributedCache.Json
     /// </summary>
     public static partial class DistributedCacheExtensions
     {
-        private static readonly JsonSerializerSettings _jsonSerializerSettings = new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore };
+        private static readonly JsonSerializerOptions _jsonSerializerOptions = new JsonSerializerOptions { ReferenceHandler = ReferenceHandler.IgnoreCycles };
 
-        private static byte[] Serialize<T>(T data)
+        private static async Task<byte[]> SerializeAsync<T>(T data)
         {
-            return Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(data, _jsonSerializerSettings));
+            using (var ms = new MemoryStream())
+            {
+                await JsonSerializer.SerializeAsync(ms, data, _jsonSerializerOptions);
+                return ms.ToArray();
+            }
         }
 
-        private static T Deserialize<T>(byte[] bytes)
+        private static async Task<T?> DeserializeAsync<T>(byte[] bytes)
         {
-            var jsonText = Encoding.UTF8.GetString(bytes);
-            return JsonConvert.DeserializeObject<T>(jsonText);
+            return await JsonSerializer.DeserializeAsync<T>(new MemoryStream(bytes), _jsonSerializerOptions);
         }
     }
 }

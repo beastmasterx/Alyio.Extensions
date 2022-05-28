@@ -2,7 +2,9 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <VersionPrefix>1.1.15</VersionPrefix>
+    <LangVersion>10.0</LangVersion>
+    <Nullable>enable</Nullable>
+    <VersionPrefix>1.22.14</VersionPrefix>
     <Copyright>Copyright (c) 2016 ROY</Copyright>
     <Description>Extension methods for Microsoft.Extensions.Caching.Distributed.IDistributedCache.</Description>
     <Authors>ROY</Authors>
@@ -11,7 +13,7 @@
     <PackageId>Alyio.DistributedCacheExtensions.Json</PackageId>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/qqbuby/Alyio.Extensions</PackageProjectUrl>
-    <PackageReleaseNotes>Add HttpLoggingOptions.IsEnalbled option.</PackageReleaseNotes>
+    <PackageReleaseNotes>Migrate from Newtonsoft.Json to System.Text.Json.</PackageReleaseNotes>
     <IncludeSymbols>true</IncludeSymbols>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/qqbuby/Alyio.Extensions</RepositoryUrl>
@@ -19,6 +21,6 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="2.0.0" />
-    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+    <PackageReference Include="System.Text.Json" Version="6.0.0" />
   </ItemGroup>
 </Project>
