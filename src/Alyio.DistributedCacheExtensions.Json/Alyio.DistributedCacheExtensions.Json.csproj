@@ -4,7 +4,7 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <LangVersion>10.0</LangVersion>
     <Nullable>enable</Nullable>
-    <VersionPrefix>1.22.14</VersionPrefix>
+    <VersionPrefix>1.41.61</VersionPrefix>
     <Copyright>Copyright (c) 2016 ROY</Copyright>
     <Description>Extension methods for Microsoft.Extensions.Caching.Distributed.IDistributedCache.</Description>
     <Authors>ROY</Authors>
