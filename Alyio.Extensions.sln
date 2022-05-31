@@ -1,4 +1,4 @@
-Microsoft Visual Studio Solution File, Format Version 12.00
+﻿Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29021.104
 MinimumVisualStudioVersion = 10.0.40219.1
@@ -17,6 +17,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alyio.Extensions.Http.Sample", "test\Alyio.Extensions.Http.Sample\Alyio.Extensions.Http.Sample.csproj", "{7705944C-D6C1-46B1-B734-1B036A9E37B1}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alyio.Extensions.Http.Tests", "test\Alyio.Extensions.Http.Tests\Alyio.Extensions.Http.Tests.csproj", "{E9B57C23-7109-48F8-88F2-9968360E3287}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Alyio.DistributedCacheExtensions.Json.Tests", "test\Alyio.DistributedCacheExtensions.Json.Tests\Alyio.DistributedCacheExtensions.Json.Tests.csproj", "{8AA8C639-806B-42A0-8B3D-77DB02DA1F36}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -100,6 +102,18 @@ Global
 		{E9B57C23-7109-48F8-88F2-9968360E3287}.Release|x64.Build.0 = Release|Any CPU
 		{E9B57C23-7109-48F8-88F2-9968360E3287}.Release|x86.ActiveCfg = Release|Any CPU
 		{E9B57C23-7109-48F8-88F2-9968360E3287}.Release|x86.Build.0 = Release|Any CPU
+		{8AA8C639-806B-42A0-8B3D-77DB02DA1F36}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8AA8C639-806B-42A0-8B3D-77DB02DA1F36}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8AA8C639-806B-42A0-8B3D-77DB02DA1F36}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{8AA8C639-806B-42A0-8B3D-77DB02DA1F36}.Debug|x64.Build.0 = Debug|Any CPU
+		{8AA8C639-806B-42A0-8B3D-77DB02DA1F36}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{8AA8C639-806B-42A0-8B3D-77DB02DA1F36}.Debug|x86.Build.0 = Debug|Any CPU
+		{8AA8C639-806B-42A0-8B3D-77DB02DA1F36}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8AA8C639-806B-42A0-8B3D-77DB02DA1F36}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8AA8C639-806B-42A0-8B3D-77DB02DA1F36}.Release|x64.ActiveCfg = Release|Any CPU
+		{8AA8C639-806B-42A0-8B3D-77DB02DA1F36}.Release|x64.Build.0 = Release|Any CPU
+		{8AA8C639-806B-42A0-8B3D-77DB02DA1F36}.Release|x86.ActiveCfg = Release|Any CPU
+		{8AA8C639-806B-42A0-8B3D-77DB02DA1F36}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -111,6 +125,7 @@ Global
 		{21EF32F9-FEF7-469D-9209-4F206939E996} = {A0B7593E-CCBF-4BD8-95FA-CB079B4AE838}
 		{7705944C-D6C1-46B1-B734-1B036A9E37B1} = {F6657A9C-25B1-49A9-8BDE-C9189D6EA251}
 		{E9B57C23-7109-48F8-88F2-9968360E3287} = {F6657A9C-25B1-49A9-8BDE-C9189D6EA251}
+		{8AA8C639-806B-42A0-8B3D-77DB02DA1F36} = {F6657A9C-25B1-49A9-8BDE-C9189D6EA251}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1B2BC923-049D-45C6-A2CB-24B1098F7E76}

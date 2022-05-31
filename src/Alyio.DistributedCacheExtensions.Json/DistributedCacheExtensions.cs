@@ -74,10 +74,10 @@ namespace Alyio.Extensions.DistributedCache.Json
         /// <param name="options"></param>
         /// <param name="token"></param>
         /// <returns></returns>
-        public static Task SetAsync<T>(this IDistributedCache cache, string key, T value, DistributedCacheEntryOptions options, CancellationToken token = default)
+        public static async Task SetAsync<T>(this IDistributedCache cache, string key, T value, DistributedCacheEntryOptions options, CancellationToken token = default)
         {
-            var bytes = SerializeAsync<T>(value);
-            return cache.SetAsync(key, bytes, options, token);
+            var bytes = await SerializeAsync<T>(value);
+            await cache.SetAsync(key, bytes, options, token);
         }
     }
 }
