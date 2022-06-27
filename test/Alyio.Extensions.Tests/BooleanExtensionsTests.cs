@@ -5,6 +5,7 @@ namespace Alyio.Extensions.Tests
     public class BooleanExtensionsTests
     {
         [Fact]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1707:Identifiers should not contain underscores", Justification = "<Pending>")]
         public void Object_Tests()
         {
             Assert.True(bool.TrueString.ToBoolean());

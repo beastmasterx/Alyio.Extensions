@@ -1,5 +1,6 @@
 ﻿using System.Globalization;
 using Xunit;
+using System;
 
 namespace Alyio.Extensions.Tests
 {
@@ -15,7 +16,7 @@ namespace Alyio.Extensions.Tests
 
             for (int i = 0, j = 0; i < HEX.Length; i += 2, j++)
             {
-                bytes[j] = byte.Parse(HEX.Substring(i, 2), NumberStyles.HexNumber, CultureInfo.InvariantCulture);
+                bytes[j] = byte.Parse(HEX.AsSpan(i, 2), NumberStyles.HexNumber, CultureInfo.InvariantCulture);
             }
 
             var hex = bytes.ToHex();

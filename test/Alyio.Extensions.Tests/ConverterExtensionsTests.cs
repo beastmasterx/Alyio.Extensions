@@ -14,6 +14,7 @@ namespace Alyio.Extensions.Tests
         private readonly object Unconvertible_NaDate = new object();
 
         [Fact]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1707:Identifiers should not contain underscores", Justification = "<Pending>")]
         public void ConverterExtension_Tests()
         {
             Assert.Null(NaN.ToInt32());
@@ -39,7 +40,7 @@ namespace Alyio.Extensions.Tests
             Assert.Null(NaDate.ToDateTime());
             Assert.Null(Unconvertible_NaDate.ToDateTime());
 
-            DateTime date = DateTime.Parse(DateTime.Now.ToString(CultureInfo.InvariantCulture));
+            DateTime date = DateTime.Parse(DateTime.Now.ToString(CultureInfo.InvariantCulture), CultureInfo.InvariantCulture);
             var unconvertible_Date = new TestDate(date);
             Assert.NotNull(unconvertible_Date.ToDateTime());
             Assert.Equal(date, unconvertible_Date.ToDateTime());
@@ -56,11 +57,9 @@ namespace Alyio.Extensions.Tests
 
         private class TestDate
         {
-            private DateTime _date;
-
             public TestDate(DateTime date)
             {
-                _date = date;
+                _ = date;
             }
 
             public override string ToString()

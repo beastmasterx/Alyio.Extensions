@@ -17,7 +17,7 @@ namespace Alyio.Extensions
         /// <returns>A 32-bit signed integer.</returns>
         public static int ToDateInt32(this DateTime datetime)
         {
-            return int.Parse(datetime.ToString("yyyyMMdd", CultureInfo.InvariantCulture));
+            return int.Parse(datetime.ToString("yyyyMMdd", CultureInfo.InvariantCulture), CultureInfo.InvariantCulture);
         }
 
         /// <summary>
