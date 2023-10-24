@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+
 using Xunit;
 
 namespace Alyio.Extensions.Tests
@@ -61,7 +62,7 @@ namespace Alyio.Extensions.Tests
 
             public TestDate(DateTime date)
             {
-                _ = date;
+                _date = date;
             }
 
             public override string ToString()
