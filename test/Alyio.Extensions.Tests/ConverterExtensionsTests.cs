@@ -57,6 +57,8 @@ namespace Alyio.Extensions.Tests
 
         private class TestDate
         {
+            private readonly DateTime _date;
+
             public TestDate(DateTime date)
             {
                 _ = date;
@@ -64,7 +66,7 @@ namespace Alyio.Extensions.Tests
 
             public override string ToString()
             {
-                return DateTime.Now.ToString(CultureInfo.InvariantCulture);
+                return _date.ToString(CultureInfo.InvariantCulture);
             }
         }
     }
