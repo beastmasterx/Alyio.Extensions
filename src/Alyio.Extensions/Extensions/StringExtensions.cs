@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 
 namespace Alyio.Extensions
 {
@@ -51,10 +52,15 @@ namespace Alyio.Extensions
         /// Converts the specified string representation of a date and time to an equivalent date and time, using the specified culture-specific formatting information.
         /// </summary>
         /// <param name="value">A string that contains a date and time to convert.</param>
+        /// <param name="styles">
+        /// A bitwise combination of enumeration values that defines how to interpret the parsed date in relation to the current time zone or the current date.
+        /// A typical value to specify is <see cref="System.Globalization.DateTimeStyles.None"/>.
+        /// </param>
+        /// <param name="provider">An <see cref="System.IFormatProvider"/> interface implementation that supplies culture-specific formatting information. Default is <see cref="CultureInfo.InvariantCulture"/></param>
         /// <returns>The date and time equivalent of the value of value, or null if value is null or was not converted successfully.</returns>
-        public static DateTime? ToDateTime(this string? value)
+        public static DateTime? ToDateTime(this string? value, DateTimeStyles? styles = DateTimeStyles.None, IFormatProvider? provider = null)
         {
-            return DateTime.TryParse(value, out DateTime dateTime) ? dateTime : null;
+            return DateTime.TryParse(value, provider ?? CultureInfo.InvariantCulture, styles ?? DateTimeStyles.None, out DateTime dateTime) ? dateTime : null;
         }
     }
 }
