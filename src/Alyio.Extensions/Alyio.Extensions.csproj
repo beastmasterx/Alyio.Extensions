@@ -14,11 +14,11 @@
     <Description>Provides extension methods for converting a base data type to another base data type</Description>
     <PackageId>Alyio.Extensions</PackageId>
     <PackageTags>Extensions;Methods;Conveter</PackageTags>
-    <PackageProjectUrl>https://github.com/qqbuby/Alyio.Extensions</PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/ousiax/Alyio.Extensions</PackageProjectUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <IncludeSymbols>true</IncludeSymbols>
     <RepositoryType>git</RepositoryType>
-    <RepositoryUrl>https://github.com/qqbuby/Alyio.Extensions</RepositoryUrl>
+    <RepositoryUrl>https://github.com/ousiax/Alyio.Extensions</RepositoryUrl>
     <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
     <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
