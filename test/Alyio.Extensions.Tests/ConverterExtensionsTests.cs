@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using System.IO;
 
 using Xunit;
 
@@ -46,6 +47,13 @@ namespace Alyio.Extensions.Tests
             Assert.NotNull(unconvertible_Date.ToDateTime());
             Assert.Equal(date, unconvertible_Date.ToDateTime());
             Assert.Equal(date.Date, unconvertible_Date.ToDate());
+
+            var fileMode = FileMode.Open;
+            Assert.Equal(FileMode.Open, fileMode.ToEnum<FileMode>());
+            Assert.Equal(FileMode.Open, 3.ToEnum<FileMode>());
+            Assert.Equal(FileMode.Open, "3".ToEnum<FileMode>());
+            Assert.Equal(FileMode.Open, "Open".ToEnum<FileMode>());
+            Assert.Equal(FileMode.Open, "OPEN".ToEnum<FileMode>());
         }
 
         private class TestNum

@@ -218,5 +218,22 @@ namespace Alyio.Extensions
         {
             return value?.ToDateTime(styles, provider)?.Date;
         }
+
+        /// <summary>
+        /// Converts the value of the specified object to an enumeration type..
+        /// </summary>
+        /// <typeparam name="T">An enumeration type.</typeparam>
+        /// <param name="value">An object that supplies the value to convert, or null.</param>
+        /// <returns>An object of type enumType whose value is represented by value.</returns>
+        public static T? ToEnum<T>(this object? value) where T : struct, Enum
+        {
+            if (value is T v)
+            {
+                return v;
+            }
+
+            var text = value?.ToString();
+            return Enum.TryParse(text, true, out T e) ? e : default(T);
+        }
     }
 }
