@@ -8,7 +8,7 @@ namespace Alyio.Extensions
     /// </summary>
     public static class DateTimeExtensions
     {
-        private static readonly DateTime UnixEpochTime = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+        private static readonly DateTime UnixEpochTime = new(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
 
         /// <summary>
         /// Converts the <see cref="DateTime"/> object as its equivalent string representation to an equivalent 32-bit signed integer using the specified 'yyyyMMdd' format.

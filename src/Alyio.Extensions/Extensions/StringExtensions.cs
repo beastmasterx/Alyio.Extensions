@@ -12,16 +12,9 @@ namespace Alyio.Extensions
         /// </summary>
         /// <param name="value">A string that contains a number to convert.</param>
         /// <returns>A 32-bit signed integer that is equivalent to the number in value, or null if value is null or was not converted successfully.</returns>
-        public static int? ToInt32(this string value)
+        public static int? ToInt32(this string? value)
         {
-            if (int.TryParse(value, out int result))
-            {
-                return result;
-            }
-            else
-            {
-                return null;
-            }
+            return int.TryParse(value, out int result) ? result : null;
         }
 
         /// <summary>
@@ -29,16 +22,9 @@ namespace Alyio.Extensions
         /// </summary>
         /// <param name="value">A string that contains a number to convert.</param>
         /// <returns>A 64-bit signed integer that is equivalent to the number in value, or null if value is null or was not converted successfully.</returns>
-        public static long? ToInt64(this string value)
+        public static long? ToInt64(this string? value)
         {
-            if (long.TryParse(value, out long result))
-            {
-                return result;
-            }
-            else
-            {
-                return null;
-            }
+            return long.TryParse(value, out long result) ? result : null;
         }
 
         /// <summary>
@@ -46,16 +32,9 @@ namespace Alyio.Extensions
         /// </summary>
         /// <param name="value">A string that contains a number to convert.</param>
         /// <returns>A double-precision floating-point number that is equivalent to the number in value, or null if value is null was not converted successfully.</returns>
-        public static double? ToDouble(this string value)
+        public static double? ToDouble(this string? value)
         {
-            if (double.TryParse(value, out double result))
-            {
-                return result;
-            }
-            else
-            {
-                return null;
-            }
+            return double.TryParse(value, out double result) ? result : null;
         }
 
         /// <summary>
@@ -63,16 +42,9 @@ namespace Alyio.Extensions
         /// </summary>
         /// <param name="value">A string that contains a number to convert.</param>
         /// <returns>A decimal number that is equivalent to the number in value, or null if value is null or was not converted successfully.</returns>
-        public static decimal? ToDecimal(this string value)
+        public static decimal? ToDecimal(this string? value)
         {
-            if (decimal.TryParse(value, out decimal result))
-            {
-                return result;
-            }
-            else
-            {
-                return null;
-            }
+            return decimal.TryParse(value, out decimal result) ? result : null;
         }
 
         /// <summary>
@@ -80,16 +52,9 @@ namespace Alyio.Extensions
         /// </summary>
         /// <param name="value">A string that contains a date and time to convert.</param>
         /// <returns>The date and time equivalent of the value of value, or null if value is null or was not converted successfully.</returns>
-        public static DateTime? ToDateTime(this string value)
+        public static DateTime? ToDateTime(this string? value)
         {
-            if (DateTime.TryParse(value, out DateTime dateTime))
-            {
-                return dateTime;
-            }
-            else
-            {
-                return null;
-            }
+            return DateTime.TryParse(value, out DateTime dateTime) ? dateTime : null;
         }
     }
 }

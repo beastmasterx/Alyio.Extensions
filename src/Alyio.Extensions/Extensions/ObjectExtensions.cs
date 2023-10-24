@@ -13,14 +13,14 @@ namespace Alyio.Extensions
         /// </summary>
         /// <param name="value">An object that supplies the value to convert, or null.</param>
         /// <returns>The string representation of value, or System.String.Empty if value is null.</returns>
-        public static string ToStringExt(this object value) => value?.ToString() ?? string.Empty;
+        public static string ToStringExt(this object? value) => value?.ToString() ?? string.Empty;
 
         /// <summary>
         /// Converts the value of the specified object to a 32-bit signed integer.
         /// </summary>
         /// <param name="value">An object that supplies the value to convert, or null.</param>
         /// <returns>A 32-bit signed integer equivalent to value, or null if value is null or was not converted successfully.</returns>
-        public static int? ToInt32(this object value)
+        public static int? ToInt32(this object? value)
         {
             if (value == null)
             {
@@ -128,7 +128,7 @@ namespace Alyio.Extensions
         /// </summary>
         /// <param name="value">An object that supplies the value to convert, or null.</param>
         /// <returns>A decimal number equivalent to value, or null if value is null or was not converted successfully.</returns>
-        public static decimal? ToDecimal(this object value)
+        public static decimal? ToDecimal(this object? value)
         {
             if (value == null)
             {
@@ -164,7 +164,7 @@ namespace Alyio.Extensions
         /// </summary>
         /// <param name="value">An object that supplies the value to convert, or null.</param>
         /// <returns>The date and time equivalent of the value of value, or null if value is null or was not converted successfully.</returns>
-        public static DateTime? ToDateTime(this object value)
+        public static DateTime? ToDateTime(this object? value)
         {
             if (value == null)
             {
@@ -200,9 +200,9 @@ namespace Alyio.Extensions
         /// </summary>
         /// <param name="value">An object that supplies the value to convert, or null.</param>
         /// <returns>The date without time equivalent of the value of value, or null if value is null or was not converted successfully.</returns>
-        public static DateTime? ToDate(this object value)
+        public static DateTime? ToDate(this object? value)
         {
-            return value.ToDateTime()?.Date;
+            return value?.ToDateTime()?.Date;
         }
     }
 }
