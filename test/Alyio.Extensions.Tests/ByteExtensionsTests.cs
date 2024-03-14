@@ -1,6 +1,6 @@
 ﻿using System.Globalization;
+
 using Xunit;
-using System;
 
 namespace Alyio.Extensions.Tests
 {
@@ -23,7 +23,7 @@ namespace Alyio.Extensions.Tests
 
             Assert.Equal(HEX, hex);
 
-            Assert.Equal(hex!.ToLowerInvariant(), LOWER_HEX);
+            Assert.Equal(LOWER_HEX, hex!.ToLowerInvariant());
         }
 
         [Fact]
