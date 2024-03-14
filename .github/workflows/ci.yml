@@ -15,10 +15,12 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Setup .NET
-        uses: actions/setup-dotnet@v1
+        uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: 6.0.x
-      - name: Test
-        run: dotnet test /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
-      - name: Pack
+          dotnet-version: 8.0.x
+      - name: dotnet info
+        run: dotnet --info
+      - name: dotnet test
+        run: dotnet test -p:CollectCoverage=true -p:CoverletOutputFormat=opencover
+      - name: dotnet Tack
         run: dotnet pack -c release
