@@ -9,6 +9,16 @@ namespace Alyio.Extensions
     public static class StringExtensions
     {
         /// <summary>
+        /// Converts the specified string representation of a logical value to its <see cref="System.Boolean"/> equivalent.
+        /// </summary>
+        /// <param name="s">A string containing the value to convert.</param>
+        /// <returns>true if value is equal to <see cref="System.Boolean.TrueString"/> or false if value is equal to <see cref="System.Boolean.FalseString"/>, otherwise false.</returns>
+        public static bool ToBoolean(this string? s)
+        {
+            return bool.TryParse(s, out bool result) && result;
+        }
+
+        /// <summary>
         /// Converts the specified string representation of a number to an equivalent 32-bit signed integer.
         /// </summary>
         /// <param name="value">A string that contains a number to convert.</param>
