@@ -22,5 +22,5 @@ jobs:
         run: dotnet --info
       - name: dotnet test
         run: dotnet test -p:CollectCoverage=true -p:CoverletOutputFormat=opencover
-      - name: dotnet Tack
+      - name: dotnet pack
         run: dotnet pack -c release
