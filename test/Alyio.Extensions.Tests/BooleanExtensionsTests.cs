@@ -6,6 +6,7 @@ namespace Alyio.Extensions.Tests
     {
         [Fact]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1707:Identifiers should not contain underscores", Justification = "<Pending>")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Globalization", "CA1305:Specify IFormatProvider", Justification = "<Pending>")]
         public void Object_Tests()
         {
             Assert.True(bool.TrueString.ToBoolean());
@@ -33,7 +34,7 @@ namespace Alyio.Extensions.Tests
             Assert.False(mdz.ToBoolean());
         }
 
-        class MyDoubleZero
+        sealed class MyDoubleZero
         {
             public override string ToString()
             {
@@ -41,7 +42,7 @@ namespace Alyio.Extensions.Tests
             }
         }
 
-        class MyDoubleNotZero
+        sealed class MyDoubleNotZero
         {
             public override string ToString()
             {

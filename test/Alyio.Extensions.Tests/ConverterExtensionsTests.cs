@@ -17,6 +17,7 @@ namespace Alyio.Extensions.Tests
 
         [Fact]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1707:Identifiers should not contain underscores", Justification = "<Pending>")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Globalization", "CA1305:Specify IFormatProvider", Justification = "<Pending>")]
         public void ConverterExtension_Tests()
         {
             Assert.Null(NaN.ToInt32());
@@ -56,7 +57,7 @@ namespace Alyio.Extensions.Tests
             Assert.Equal(FileMode.Open, "OPEN".ToEnum<FileMode>());
         }
 
-        private class TestNum
+        private sealed class TestNum
         {
             public override string ToString()
             {
@@ -64,7 +65,7 @@ namespace Alyio.Extensions.Tests
             }
         }
 
-        private class TestDate
+        private sealed class TestDate
         {
             private readonly DateTime _date;
 

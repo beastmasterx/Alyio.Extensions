@@ -38,7 +38,7 @@ namespace Alyio.Extensions
                 }
                 catch
                 {
-                    var d = value.ToDouble();
+                    var d = value.ToDouble(provider ?? CultureInfo.InvariantCulture);
                     if (d != null)
                     {
                         return d != 0D;
@@ -52,7 +52,7 @@ namespace Alyio.Extensions
             }
             else
             {
-                var d = value.ToDouble();
+                var d = value.ToDouble(provider ?? CultureInfo.InvariantCulture);
                 if (d != null)
                 {
                     return d != 0D;
@@ -251,7 +251,7 @@ namespace Alyio.Extensions
                 catch
                 {
                     var str = value.ToString();
-                    return str.ToDateTime();
+                    return str.ToDateTime(styles, provider ?? CultureInfo.InvariantCulture);
                 }
             }
             else
