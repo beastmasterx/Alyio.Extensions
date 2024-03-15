@@ -1,13 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <Copyright>Copyright (c) 2024 Jon X</Copyright>
-    <AssemblyTitle>Alyio.Extensions</AssemblyTitle>
-    <VersionPrefix>2.3.0</VersionPrefix>
-    <Authors>Jon X</Authors>
-    <TargetFramework>netstandard1.3</TargetFramework>
-    <AssemblyName>Alyio.Extensions</AssemblyName>
+    <TargetFramework />
+    <TargetFrameworks>netstandard1.3;netstandard2.0</TargetFrameworks>
     <Description>Provides extension methods for converting a base data type to another base data type</Description>
+    <Authors>Jon X</Authors>
+    <Copyright>Copyright (c) 2024 Jon X</Copyright>
+    <VersionPrefix>2.3.0</VersionPrefix>
     <PackageId>Alyio.Extensions</PackageId>
     <PackageTags>Extensions;Methods;Conveter</PackageTags>
     <PackageProjectUrl>https://github.com/ousiax/Alyio.Extensions</PackageProjectUrl>
