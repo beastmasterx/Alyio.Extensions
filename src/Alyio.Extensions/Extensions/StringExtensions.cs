@@ -1,5 +1,4 @@
-﻿using System;
-using System.Globalization;
+﻿using System.Globalization;
 
 namespace Alyio.Extensions
 {
@@ -9,53 +8,129 @@ namespace Alyio.Extensions
     public static class StringExtensions
     {
         /// <summary>
-        /// Converts the specified string representation of a logical value to its <see cref="System.Boolean"/> equivalent.
+        /// Converts the specified string representation of a logical value to its <see cref="bool"/> equivalent.
         /// </summary>
         /// <param name="s">A string containing the value to convert.</param>
-        /// <returns>true if value is equal to <see cref="System.Boolean.TrueString"/> or false if value is equal to <see cref="System.Boolean.FalseString"/>, otherwise false.</returns>
+        /// <returns>
+        /// true if value is equal to <see cref="bool.TrueString"/> (case-insensitive);
+        /// false if value is equal to <see cref="bool.FalseString"/> (case-insensitive) or null;
+        /// otherwise false.
+        /// </returns>
         public static bool ToBoolean(this string? s)
         {
-            return bool.TryParse(s, out bool result) && result;
+            return !string.IsNullOrWhiteSpace(s) && bool.TryParse(s, out bool result) && result;
         }
 
         /// <summary>
         /// Converts the specified string representation of a number to an equivalent 32-bit signed integer.
         /// </summary>
         /// <param name="value">A string that contains a number to convert.</param>
-        /// <returns>A 32-bit signed integer that is equivalent to the number in value, or null if value is null or was not converted successfully.</returns>
-        public static int? ToInt32(this string? value)
+        /// <param name="provider">An <see cref="IFormatProvider"/> interface implementation that supplies culture-specific formatting information. Default is <see cref="CultureInfo.InvariantCulture"/></param>
+        /// <returns>
+        /// A 32-bit signed integer that is equivalent to the number in value, or null if:
+        /// - value is null, empty, or contains only whitespace
+        /// - value is not in the correct format
+        /// - value represents a number less than <see cref="int.MinValue"/> or greater than <see cref="int.MaxValue"/>
+        /// </returns>
+        public static int? ToInt32(this string? value, IFormatProvider? provider = null)
         {
-            return int.TryParse(value, out int result) ? result : null;
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                return null;
+            }
+
+            try
+            {
+                return int.Parse(value, provider ?? CultureInfo.InvariantCulture);
+            }
+            catch
+            {
+                return null;
+            }
         }
 
         /// <summary>
-        /// Converts the specified string representation of a number to an equivalent 32-bit signed integer.
+        /// Converts the specified string representation of a number to an equivalent 64-bit signed integer.
         /// </summary>
         /// <param name="value">A string that contains a number to convert.</param>
-        /// <returns>A 64-bit signed integer that is equivalent to the number in value, or null if value is null or was not converted successfully.</returns>
-        public static long? ToInt64(this string? value)
+        /// <param name="provider">An <see cref="IFormatProvider"/> interface implementation that supplies culture-specific formatting information. Default is <see cref="CultureInfo.InvariantCulture"/></param>
+        /// <returns>
+        /// A 64-bit signed integer that is equivalent to the number in value, or null if:
+        /// - value is null, empty, or contains only whitespace
+        /// - value is not in the correct format
+        /// - value represents a number less than <see cref="long.MinValue"/> or greater than <see cref="long.MaxValue"/>
+        /// </returns>
+        public static long? ToInt64(this string? value, IFormatProvider? provider = null)
         {
-            return long.TryParse(value, out long result) ? result : null;
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                return null;
+            }
+
+            try
+            {
+                return long.Parse(value, provider ?? CultureInfo.InvariantCulture);
+            }
+            catch
+            {
+                return null;
+            }
         }
 
         /// <summary>
         /// Converts the specified string representation of a number to an equivalent double-precision floating-point number.
         /// </summary>
         /// <param name="value">A string that contains a number to convert.</param>
-        /// <returns>A double-precision floating-point number that is equivalent to the number in value, or null if value is null was not converted successfully.</returns>
-        public static double? ToDouble(this string? value)
+        /// <param name="provider">An <see cref="IFormatProvider"/> interface implementation that supplies culture-specific formatting information. Default is <see cref="CultureInfo.InvariantCulture"/></param>
+        /// <returns>
+        /// A double-precision floating-point number that is equivalent to the number in value, or null if:
+        /// - value is null, empty, or contains only whitespace
+        /// - value is not in the correct format
+        /// - value represents a number less than <see cref="double.MinValue"/> or greater than <see cref="double.MaxValue"/>
+        /// </returns>
+        public static double? ToDouble(this string? value, IFormatProvider? provider = null)
         {
-            return double.TryParse(value, out double result) ? result : null;
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                return null;
+            }
+
+            try
+            {
+                return double.Parse(value, provider ?? CultureInfo.InvariantCulture);
+            }
+            catch
+            {
+                return null;
+            }
         }
 
         /// <summary>
         /// Converts the specified string representation of a number to an equivalent decimal number.
         /// </summary>
         /// <param name="value">A string that contains a number to convert.</param>
-        /// <returns>A decimal number that is equivalent to the number in value, or null if value is null or was not converted successfully.</returns>
-        public static decimal? ToDecimal(this string? value)
+        /// <param name="provider">An <see cref="IFormatProvider"/> interface implementation that supplies culture-specific formatting information. Default is <see cref="CultureInfo.InvariantCulture"/></param>
+        /// <returns>
+        /// A decimal number that is equivalent to the number in value, or null if:
+        /// - value is null, empty, or contains only whitespace
+        /// - value is not in the correct format
+        /// - value represents a number less than <see cref="decimal.MinValue"/> or greater than <see cref="decimal.MaxValue"/>
+        /// </returns>
+        public static decimal? ToDecimal(this string? value, IFormatProvider? provider = null)
         {
-            return decimal.TryParse(value, out decimal result) ? result : null;
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                return null;
+            }
+
+            try
+            {
+                return decimal.Parse(value, provider ?? CultureInfo.InvariantCulture);
+            }
+            catch
+            {
+                return null;
+            }
         }
 
         /// <summary>
@@ -64,13 +139,30 @@ namespace Alyio.Extensions
         /// <param name="value">A string that contains a date and time to convert.</param>
         /// <param name="styles">
         /// A bitwise combination of enumeration values that defines how to interpret the parsed date in relation to the current time zone or the current date.
-        /// A typical value to specify is <see cref="System.Globalization.DateTimeStyles.None"/>.
+        /// A typical value to specify is <see cref="DateTimeStyles.None"/>.
         /// </param>
-        /// <param name="provider">An <see cref="System.IFormatProvider"/> interface implementation that supplies culture-specific formatting information. Default is <see cref="CultureInfo.InvariantCulture"/></param>
-        /// <returns>The date and time equivalent of the value of value, or null if value is null or was not converted successfully.</returns>
+        /// <param name="provider">An <see cref="IFormatProvider"/> interface implementation that supplies culture-specific formatting information. Default is <see cref="CultureInfo.InvariantCulture"/></param>
+        /// <returns>
+        /// The date and time equivalent of the value of value, or null if:
+        /// - value is null, empty, or contains only whitespace
+        /// - value is not in the correct format
+        /// - value represents a date and time less than <see cref="DateTime.MinValue"/> or greater than <see cref="DateTime.MaxValue"/>
+        /// </returns>
         public static DateTime? ToDateTime(this string? value, DateTimeStyles? styles = DateTimeStyles.None, IFormatProvider? provider = null)
         {
-            return DateTime.TryParse(value, provider ?? CultureInfo.InvariantCulture, styles ?? DateTimeStyles.None, out DateTime dateTime) ? dateTime : null;
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                return null;
+            }
+
+            try
+            {
+                return DateTime.Parse(value, provider ?? CultureInfo.InvariantCulture, styles ?? DateTimeStyles.None);
+            }
+            catch
+            {
+                return null;
+            }
         }
     }
 }

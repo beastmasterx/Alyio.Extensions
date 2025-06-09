@@ -1,5 +1,4 @@
-﻿using System;
-using System.Globalization;
+﻿using System.Globalization;
 
 namespace Alyio.Extensions
 {
@@ -9,215 +8,193 @@ namespace Alyio.Extensions
     public static class ObjectExtensions
     {
         /// <summary>
-        /// Converts the value of a specified object to an equivalent <see cref="Boolean"/> value.
+        /// Converts the value of a specified object to an equivalent <see cref="bool"/> value.
         /// </summary>
         /// <param name="value">The object to convert.</param>
-        /// <param name="provider">An <see cref="System.IFormatProvider"/> interface implementation that supplies culture-specific formatting information. Default is <see cref="CultureInfo.InvariantCulture"/></param>
+        /// <param name="provider">An <see cref="IFormatProvider"/> interface implementation that supplies culture-specific formatting information. Default is <see cref="CultureInfo.InvariantCulture"/></param>
         /// <returns>
-        /// <see cref="System.Object"/>: true or false, which reflects the value returned by invoking the <see cref="IConvertible.ToBoolean"/> method for the underlying type of value. If value is null, the method returns false. 
-        /// <see cref="System.String"/>: true if value equals <see cref="Boolean.TrueString"/>, or false if value equals <see cref="Boolean.FalseString"/> or null.
-        /// <see cref="System.Double"/>: true if value is not zero; otherwise, false.
+        /// - false if value is null.
+        /// - true or false, which reflects the value returned by invoking the <see cref="IConvertible.ToBoolean"/> method for the underlying type of value.
+        /// - true if value is not zero; otherwise, false.
+        /// - true if value equals <see cref="bool.TrueString"/>, or false if value equals <see cref="bool.FalseString"/> or null.
         /// </returns>
         public static bool ToBoolean(this object? value, IFormatProvider? provider = null)
         {
+            provider ??= CultureInfo.InvariantCulture;
+
             if (value == null)
             {
                 return false;
             }
 
-            if (typeof(bool).Equals(value.GetType()))
+            if (value is bool boolValue)
             {
-                return (bool)value;
+                return boolValue;
             }
 
             if (value is IConvertible converter)
             {
                 try
                 {
-                    return converter.ToBoolean(provider ?? CultureInfo.InvariantCulture);
+                    return converter.ToBoolean(provider);
                 }
                 catch
                 {
-                    var d = value.ToDouble(provider ?? CultureInfo.InvariantCulture);
-                    if (d != null)
+                    if (value.ToDouble(provider) is double d1)
                     {
-                        return d != 0D;
-                    }
-                    else
-                    {
-                        var s = value.ToString();
-                        return s.ToBoolean();
+                        return d1 != 0D;
                     }
                 }
             }
-            else
-            {
-                var d = value.ToDouble(provider ?? CultureInfo.InvariantCulture);
-                if (d != null)
-                {
-                    return d != 0D;
-                }
-                else
-                {
-                    var s = value.ToString();
-                    return s.ToBoolean();
-                }
-            }
+
+            return value.ToDouble(provider) is double d2 ? d2 != 0D : value.ToString()?.ToBoolean() ?? false;
         }
 
         /// <summary>
         /// Converts the value of the specified object to its equivalent string representation.
         /// </summary>
         /// <param name="value">An object that supplies the value to convert, or null.</param>
-        /// <returns>The string representation of value, or System.String.Empty if value is null.</returns>
+        /// <returns>The string representation of value, or <see cref="string.Empty"/> if value is null.</returns>
         public static string ToStringExt(this object? value) => value?.ToString() ?? string.Empty;
 
         /// <summary>
         /// Converts the value of the specified object to a 32-bit signed integer.
         /// </summary>
         /// <param name="value">An object that supplies the value to convert, or null.</param>
-        /// <param name="provider">An <see cref="System.IFormatProvider"/> interface implementation that supplies culture-specific formatting information. Default is <see cref="CultureInfo.InvariantCulture"/></param>
+        /// <param name="provider">An <see cref="IFormatProvider"/> interface implementation that supplies culture-specific formatting information. Default is <see cref="CultureInfo.InvariantCulture"/></param>
         /// <returns>A 32-bit signed integer equivalent to value, or null if value is null or was not converted successfully.</returns>
         public static int? ToInt32(this object? value, IFormatProvider? provider = null)
         {
+            provider ??= CultureInfo.InvariantCulture;
+
             if (value == null)
             {
                 return null;
             }
 
-            if (typeof(int).Equals(value.GetType()))
+            if (value is int intValue)
             {
-                return (int)value;
+                return intValue;
             }
 
             if (value is IConvertible converter)
             {
                 try
                 {
-                    return converter.ToInt32(provider ?? CultureInfo.InvariantCulture);
+                    return converter.ToInt32(provider);
                 }
                 catch
                 {
-                    var s = value.ToString();
-                    return s.ToInt32();
+                    return value.ToString()?.ToInt32(provider);
                 }
             }
-            else
-            {
-                var s = value.ToString();
-                return s.ToInt32();
-            }
+
+            return value.ToString()?.ToInt32(provider);
         }
 
         /// <summary>
         /// Converts the value of the specified object to a 64-bit signed integer.
         /// </summary>
         /// <param name="value">An object that supplies the value to convert, or null.</param>
-        /// <param name="provider">An <see cref="System.IFormatProvider"/> interface implementation that supplies culture-specific formatting information. Default is <see cref="CultureInfo.InvariantCulture"/></param>
+        /// <param name="provider">An <see cref="IFormatProvider"/> interface implementation that supplies culture-specific formatting information. Default is <see cref="CultureInfo.InvariantCulture"/></param>
         /// <returns>A 64-bit signed integer equivalent to value, or null if value is null or was not converted successfully.</returns>
         public static long? ToInt64(this object? value, IFormatProvider? provider = null)
         {
+            provider ??= CultureInfo.InvariantCulture;
+
             if (value == null)
             {
                 return null;
             }
 
-            if (typeof(long).Equals(value.GetType()))
+            if (value is long longValue)
             {
-                return (long)value;
+                return longValue;
             }
 
             if (value is IConvertible converter)
             {
                 try
                 {
-                    return converter.ToInt64(provider ?? CultureInfo.InvariantCulture);
+                    return converter.ToInt64(provider);
                 }
                 catch
                 {
-                    var s = value.ToString();
-                    return s.ToInt64();
+                    return value.ToString()?.ToInt64(provider);
                 }
             }
-            else
-            {
-                var s = value.ToString();
-                return s.ToInt64();
-            }
+
+            return value.ToString()?.ToInt64(provider);
         }
 
         /// <summary>
         /// Converts the value of the specified object to a double-precision floating-point number.
         /// </summary>
         /// <param name="value">An object that supplies the value to convert, or null.</param>
-        /// <param name="provider">An <see cref="System.IFormatProvider"/> interface implementation that supplies culture-specific formatting information. Default is <see cref="CultureInfo.InvariantCulture"/></param>
+        /// <param name="provider">An <see cref="IFormatProvider"/> interface implementation that supplies culture-specific formatting information. Default is <see cref="CultureInfo.InvariantCulture"/></param>
         /// <returns>A double-precision floating-point number equivalent to value, or null if value is null or was not converted successfully.</returns>
         public static double? ToDouble(this object? value, IFormatProvider? provider = null)
         {
+            provider ??= CultureInfo.InvariantCulture;
+
             if (value == null)
             {
                 return null;
             }
 
-            if (typeof(double).Equals(value.GetType()))
+            if (value is double doubleValue)
             {
-                return (double)value;
+                return doubleValue;
             }
 
             if (value is IConvertible converter)
             {
                 try
                 {
-                    return converter.ToDouble(provider ?? CultureInfo.InvariantCulture);
+                    return converter.ToDouble(provider);
                 }
                 catch
                 {
-                    var s = value.ToString();
-                    return s.ToDouble();
+                    return value.ToString()?.ToDouble(provider);
                 }
             }
-            else
-            {
-                var s = value.ToString();
-                return s.ToDouble();
-            }
+
+            return value.ToString()?.ToDouble(provider);
         }
 
         /// <summary>
         /// Converts the value of the specified object to a decimal number.
         /// </summary>
         /// <param name="value">An object that supplies the value to convert, or null.</param>
-        /// <param name="provider">An <see cref="System.IFormatProvider"/> interface implementation that supplies culture-specific formatting information. Default is <see cref="CultureInfo.InvariantCulture"/></param>
+        /// <param name="provider">An <see cref="IFormatProvider"/> interface implementation that supplies culture-specific formatting information. Default is <see cref="CultureInfo.InvariantCulture"/></param>
         /// <returns>A decimal number equivalent to value, or null if value is null or was not converted successfully.</returns>
         public static decimal? ToDecimal(this object? value, IFormatProvider? provider = null)
         {
+            provider ??= CultureInfo.InvariantCulture;
+
             if (value == null)
             {
                 return null;
             }
 
-            if (typeof(decimal).Equals(value.GetType()))
+            if (value is decimal decimalValue)
             {
-                return (decimal)value;
+                return decimalValue;
             }
 
             if (value is IConvertible converter)
             {
                 try
                 {
-                    return converter.ToDecimal(provider ?? CultureInfo.InvariantCulture);
+                    return converter.ToDecimal(provider);
                 }
                 catch
                 {
-                    var s = value.ToString();
-                    return s.ToDecimal();
+                    return value.ToString()?.ToDecimal(provider);
                 }
             }
-            else
-            {
-                var s = value.ToString();
-                return s.ToDecimal();
-            }
+
+            return value.ToString()?.ToDecimal(provider);
         }
 
         /// <summary>
@@ -228,37 +205,35 @@ namespace Alyio.Extensions
         /// A bitwise combination of enumeration values that defines how to interpret the parsed date in relation to the current time zone or the current date.
         /// A typical value to specify is <see cref="System.Globalization.DateTimeStyles.None"/>.
         /// </param>
-        /// <param name="provider">An <see cref="System.IFormatProvider"/> interface implementation that supplies culture-specific formatting information. Default is <see cref="CultureInfo.InvariantCulture"/></param>
+        /// <param name="provider">An <see cref="IFormatProvider"/> interface implementation that supplies culture-specific formatting information. Default is <see cref="CultureInfo.InvariantCulture"/></param>
         /// <returns>The date and time equivalent of the value of value, or null if value is null or was not converted successfully.</returns>
         public static DateTime? ToDateTime(this object? value, DateTimeStyles? styles = DateTimeStyles.None, IFormatProvider? provider = null)
         {
+            provider ??= CultureInfo.InvariantCulture;
+
             if (value == null)
             {
                 return null;
             }
 
-            if (typeof(DateTime).Equals(value.GetType()))
+            if (value is DateTime dateTimeValue)
             {
-                return (DateTime)value;
+                return dateTimeValue;
             }
 
             if (value is IConvertible converter)
             {
                 try
                 {
-                    return converter.ToDateTime(provider ?? CultureInfo.InvariantCulture);
+                    return converter.ToDateTime(provider);
                 }
                 catch
                 {
-                    var str = value.ToString();
-                    return str.ToDateTime(styles, provider ?? CultureInfo.InvariantCulture);
+                    return value.ToString()?.ToDateTime(styles, provider);
                 }
             }
-            else
-            {
-                var str = value.ToString();
-                return str.ToDateTime(styles, provider);
-            }
+
+            return value.ToString()?.ToDateTime(styles, provider);
         }
 
         /// <summary>
@@ -269,7 +244,7 @@ namespace Alyio.Extensions
         /// A bitwise combination of enumeration values that defines how to interpret the parsed date in relation to the current time zone or the current date.
         /// A typical value to specify is <see cref="System.Globalization.DateTimeStyles.None"/>.
         /// </param>
-        /// <param name="provider">An <see cref="System.IFormatProvider"/> interface implementation that supplies culture-specific formatting information. Default is <see cref="CultureInfo.InvariantCulture"/></param>
+        /// <param name="provider">An <see cref="IFormatProvider"/> interface implementation that supplies culture-specific formatting information. Default is <see cref="CultureInfo.InvariantCulture"/></param>
         /// <returns>The date without time equivalent of the value of value, or null if value is null or was not converted successfully.</returns>
         public static DateTime? ToDate(this object? value, DateTimeStyles? styles = DateTimeStyles.None, IFormatProvider? provider = null)
         {
@@ -277,11 +252,11 @@ namespace Alyio.Extensions
         }
 
         /// <summary>
-        /// Converts the value of the specified object to an enumeration type..
+        /// Converts the value of the specified object to an enumeration type.
         /// </summary>
         /// <typeparam name="T">An enumeration type.</typeparam>
         /// <param name="value">An object that supplies the value to convert, or null.</param>
-        /// <returns>An object of type enumType whose value is represented by value.</returns>
+        /// <returns>An object of type enumType whose value is represented by value, or default(T) if conversion fails.</returns>
         public static T? ToEnum<T>(this object? value) where T : struct, Enum
         {
             if (value is T v)
@@ -290,7 +265,7 @@ namespace Alyio.Extensions
             }
 
             var text = value?.ToString();
-            return Enum.TryParse(text, true, out T e) ? e : default(T);
+            return Enum.TryParse(text, true, out T e) ? e : default;
         }
     }
 }
