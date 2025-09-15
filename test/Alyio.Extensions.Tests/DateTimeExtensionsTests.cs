@@ -1,4 +1,6 @@
-﻿using Xunit;
+﻿// MIT License
+
+using Xunit;
 
 namespace Alyio.Extensions.Tests
 {

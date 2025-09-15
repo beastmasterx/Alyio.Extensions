@@ -1,4 +1,4 @@
-﻿using System.Globalization;
+﻿// MIT License
 
 namespace Alyio.Extensions
 {
@@ -7,7 +7,7 @@ namespace Alyio.Extensions
     /// </summary>
     public static class DateTimeExtensions
     {
-        private static readonly DateTime UnixEpochTime = new(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+        private static readonly DateTime s_epoch = new(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
 
         /// <summary>
         /// Converts the <see cref="DateTime"/> object to its equivalent integer representation using the specified 'yyyyMMdd' format.
@@ -36,7 +36,7 @@ namespace Alyio.Extensions
         /// <returns>A 64-bit signed integer representing the number of seconds since Unix epoch (1970-01-01 00:00:00 UTC).</returns>
         public static long ToUnix(this DateTime datetime)
         {
-            var timeSpan = datetime.ToUniversalTime().Subtract(UnixEpochTime);
+            var timeSpan = datetime.ToUniversalTime().Subtract(s_epoch);
             return (long)timeSpan.TotalSeconds;
         }
 
@@ -58,7 +58,7 @@ namespace Alyio.Extensions
 
             try
             {
-                return UnixEpochTime.AddSeconds(seconds);
+                return s_epoch.AddSeconds(seconds);
             }
             catch
             {
@@ -84,7 +84,7 @@ namespace Alyio.Extensions
 
             try
             {
-                return UnixEpochTime.AddSeconds(seconds);
+                return s_epoch.AddSeconds(seconds);
             }
             catch
             {

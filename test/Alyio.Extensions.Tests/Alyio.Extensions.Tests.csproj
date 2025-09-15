@@ -21,4 +21,8 @@
     <PackageReference Include="xunit" Version="2.7.0" />
   </ItemGroup>
 
+
+  <ItemGroup>
+    <Using Include=" System.Globalization" />
+  </ItemGroup>
 </Project>

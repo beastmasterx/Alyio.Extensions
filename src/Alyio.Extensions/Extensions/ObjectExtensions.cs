@@ -1,4 +1,4 @@
-﻿using System.Globalization;
+﻿// MIT License
 
 namespace Alyio.Extensions
 {
