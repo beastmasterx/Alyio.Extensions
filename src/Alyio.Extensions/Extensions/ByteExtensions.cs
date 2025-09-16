@@ -1,4 +1,4 @@
-﻿using System;
+﻿// MIT License
 
 namespace Alyio.Extensions
 {

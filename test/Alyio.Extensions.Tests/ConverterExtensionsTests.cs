@@ -1,7 +1,6 @@
-﻿using System;
-using System.Globalization;
-using System.IO;
+﻿// MIT License
 
+using System.Globalization;
 using Xunit;
 
 namespace Alyio.Extensions.Tests
