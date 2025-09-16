@@ -55,7 +55,15 @@ namespace Alyio.Extensions
         /// </summary>
         /// <param name="value">An object that supplies the value to convert, or null.</param>
         /// <returns>The string representation of value, or <see cref="string.Empty"/> if value is null.</returns>
-        public static string ToStringExt(this object? value) => value?.ToString() ?? string.Empty;
+        [Obsolete("This method has been renamed to 'ToStringOrEmpty' for better clarity. 'ToStringExt' will be removed in a future version.")]
+        public static string ToStringExt(this object? value) => ToStringOrEmpty(value);
+
+        /// <summary>
+        /// Converts the value of the specified object to its equivalent string representation.
+        /// </summary>
+        /// <param name="value">An object that supplies the value to convert, or null.</param>
+        /// <returns>The string representation of value, or <see cref="string.Empty"/> if value is null.</returns>
+        public static string ToStringOrEmpty(this object? value) => value?.ToString() ?? string.Empty;
 
         /// <summary>
         /// Converts the value of the specified object to a 32-bit signed integer.
@@ -265,7 +273,13 @@ namespace Alyio.Extensions
             }
 
             var text = value?.ToString();
-            return Enum.TryParse(text, true, out T e) ? e : default;
+
+            if (Enum.TryParse(text, true, out T e))
+            {
+                return e;
+            }
+
+            return null;
         }
     }
 }
