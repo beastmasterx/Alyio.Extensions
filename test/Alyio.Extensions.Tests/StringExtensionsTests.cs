@@ -82,5 +82,116 @@ namespace Alyio.Extensions.Tests
             Assert.Null(" ".ToDateTime(null, CultureInfo.InvariantCulture));
             Assert.Null("x".ToDateTime(null, CultureInfo.InvariantCulture));
         }
+
+        #region ToEnum Tests
+
+        [Theory]
+        [InlineData("Read", FileAccess.Read)]
+        [InlineData("read", FileAccess.Read)]
+        [InlineData("READ", FileAccess.Read)]
+        [InlineData("Write", FileAccess.Write)]
+        [InlineData("ReadWrite", FileAccess.ReadWrite)]
+        [InlineData("readwrite", FileAccess.ReadWrite)]
+        public void ToEnum_String_To_FileAccess_Should_Convert_Correctly(string input, FileAccess expected)
+        {
+            Assert.Equal(expected, input.ToEnum<FileAccess>());
+        }
+
+        [Theory]
+        [InlineData("1", FileMode.CreateNew)]
+        [InlineData("2", FileMode.Create)]
+        [InlineData("3", FileMode.Open)]
+        public void ToEnum_String_Numeric_To_FileMode_Should_Convert_Correctly(string input, FileMode expected)
+        {
+            Assert.Equal(expected, input.ToEnum<FileMode>());
+        }
+
+        [Theory]
+        [InlineData("")]
+        [InlineData(" ")]
+        [InlineData("  ")]
+        [InlineData("\t")]
+        [InlineData("\n")]
+        [InlineData("\r\n")]
+        [InlineData(null)]
+        public void ToEnum_String_Empty_Or_Whitespace_Should_Return_Null(string? input)
+        {
+            Assert.Null(input.ToEnum<FileMode>());
+            Assert.Null(input.ToEnum<FileAccess>());
+            Assert.Null(input.ToEnum<DayOfWeek>());
+        }
+
+        [Theory]
+        [InlineData("invalid")]
+        [InlineData("NotAValidEnum")]
+        [InlineData("OpenInvalid")]
+        [InlineData("123abc")]
+        [InlineData("abc123")]
+        [InlineData("!@#$%")]
+        [InlineData("Open|Create")] // Bitwise OR
+        public void ToEnum_String_Invalid_Should_Return_Null(string input)
+        {
+            Assert.Null(input.ToEnum<FileMode>());
+            Assert.Null(input.ToEnum<FileAccess>());
+            Assert.Null(input.ToEnum<DayOfWeek>());
+        }
+
+        [Theory]
+        [InlineData("7")] // Out of range for DayOfWeek
+        [InlineData("-1")] // Negative value
+        [InlineData("999")] // Way out of range
+        [InlineData("2147483647")] // int.MaxValue
+        [InlineData("-2147483648")] // int.MinValue
+        public void ToEnum_String_Out_Of_Range_Numeric_Should_Return_Null(string input)
+        {
+            Assert.Null(input.ToEnum<DayOfWeek>());
+            Assert.Null(input.ToEnum<FileMode>());
+        }
+
+        [Fact]
+        public void ToEnum_String_With_Flags_Enum_Should_Work()
+        {
+            // Test with a flags enum if available, or create a simple test
+            // For now, we'll test with existing enums
+            Assert.Equal(FileMode.Open, "Open".ToEnum<FileMode>());
+            Assert.Equal(FileAccess.Read, "Read".ToEnum<FileAccess>());
+        }
+
+        [Theory]
+        [InlineData("Open", FileMode.Open)]
+        [InlineData("open", FileMode.Open)]
+        [InlineData("OPEN", FileMode.Open)]
+        [InlineData("oPeN", FileMode.Open)]
+        [InlineData("OpEn", FileMode.Open)]
+        public void ToEnum_String_Case_Insensitive_Should_Work(string input, FileMode expected)
+        {
+            Assert.Equal(expected, input.ToEnum<FileMode>());
+        }
+
+        [Theory]
+        [InlineData("ReadOnly, Hidden", FileAttributes.ReadOnly | FileAttributes.Hidden)]
+        [InlineData("readonly, hidden", FileAttributes.ReadOnly | FileAttributes.Hidden)]
+        [InlineData("READONLY, HIDDEN", FileAttributes.ReadOnly | FileAttributes.Hidden)]
+        [InlineData("ReadOnly, Hidden, System", FileAttributes.ReadOnly | FileAttributes.Hidden | FileAttributes.System)]
+        [InlineData("Archive, Compressed", FileAttributes.Archive | FileAttributes.Compressed)]
+        [InlineData("Directory, ReadOnly", FileAttributes.Directory | FileAttributes.ReadOnly)]
+        public void ToEnum_String_Flag_Enum_Comma_Separated_Should_Convert_Correctly(string input, FileAttributes expected)
+        {
+            Assert.Equal(expected, input.ToEnum<FileAttributes>());
+        }
+
+        [Theory]
+        [InlineData("ReadOnly|Hidden")]
+        [InlineData("readonly|hidden")]
+        [InlineData("READONLY|HIDDEN")]
+        [InlineData("ReadOnly|Hidden|System")]
+        [InlineData("Archive|Compressed")]
+        [InlineData("Directory|ReadOnly")]
+        public void ToEnum_String_Flag_Enum_Pipe_Separated_Should_Return_Null(string input)
+        {
+            Assert.Null(input.ToEnum<FileAttributes>());
+        }
+
+        #endregion
     }
 }

@@ -273,13 +273,7 @@ namespace Alyio.Extensions
             }
 
             var text = value?.ToString();
-
-            if (Enum.TryParse(text, true, out T e))
-            {
-                return e;
-            }
-
-            return null;
+            return text.ToEnum<T>();
         }
     }
 }

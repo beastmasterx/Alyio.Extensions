@@ -164,5 +164,26 @@ namespace Alyio.Extensions
 
             return null;
         }
+
+        /// <summary>
+        /// Converts the specified string representation of a number to an equivalent enumeration type.
+        /// </summary>
+        /// <typeparam name="T">An enumeration type.</typeparam>
+        /// <param name="value">A string that contains an enumeration to convert.</param>
+        /// <returns>An object of type enumType whose value is represented by value, or null if conversion fails.</returns>
+        public static T? ToEnum<T>(this string? value) where T : struct, Enum
+        {
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                return null;
+            }
+
+            if (Enum.TryParse(value, true, out T result) && Enum.IsDefined(typeof(T), result))
+            {
+                return result;
+            }
+
+            return null;
+        }
     }
 }
