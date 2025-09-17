@@ -18,7 +18,17 @@ namespace Alyio.Extensions
         /// </returns>
         public static bool ToBoolean(this string? s)
         {
-            return !string.IsNullOrWhiteSpace(s) && bool.TryParse(s, out bool result) && result;
+            if (bool.TryParse(s, out bool result))
+            {
+                return result;
+            }
+
+            if (double.TryParse(s, out double d))
+            {
+                return d != 0;
+            }
+
+            return false;
         }
 
         /// <summary>
@@ -39,14 +49,12 @@ namespace Alyio.Extensions
                 return null;
             }
 
-            try
+            if (int.TryParse(value, NumberStyles.Integer, provider ?? CultureInfo.InvariantCulture, out int result))
             {
-                return int.Parse(value, provider ?? CultureInfo.InvariantCulture);
+                return result;
             }
-            catch
-            {
-                return null;
-            }
+
+            return null;
         }
 
         /// <summary>
@@ -67,14 +75,12 @@ namespace Alyio.Extensions
                 return null;
             }
 
-            try
+            if (long.TryParse(value, NumberStyles.Integer, provider ?? CultureInfo.InvariantCulture, out long result))
             {
-                return long.Parse(value, provider ?? CultureInfo.InvariantCulture);
+                return result;
             }
-            catch
-            {
-                return null;
-            }
+
+            return null;
         }
 
         /// <summary>
@@ -95,14 +101,12 @@ namespace Alyio.Extensions
                 return null;
             }
 
-            try
+            if (double.TryParse(value, NumberStyles.Float | NumberStyles.AllowThousands, provider ?? CultureInfo.InvariantCulture, out double result))
             {
-                return double.Parse(value, provider ?? CultureInfo.InvariantCulture);
+                return result;
             }
-            catch
-            {
-                return null;
-            }
+
+            return null;
         }
 
         /// <summary>
@@ -123,14 +127,12 @@ namespace Alyio.Extensions
                 return null;
             }
 
-            try
+            if (decimal.TryParse(value, NumberStyles.Number, provider ?? CultureInfo.InvariantCulture, out decimal result))
             {
-                return decimal.Parse(value, provider ?? CultureInfo.InvariantCulture);
+                return result;
             }
-            catch
-            {
-                return null;
-            }
+
+            return null;
         }
 
         /// <summary>
@@ -155,14 +157,12 @@ namespace Alyio.Extensions
                 return null;
             }
 
-            try
+            if (DateTime.TryParse(value, provider ?? CultureInfo.InvariantCulture, styles ?? DateTimeStyles.None, out DateTime result))
             {
-                return DateTime.Parse(value, provider ?? CultureInfo.InvariantCulture, styles ?? DateTimeStyles.None);
+                return result;
             }
-            catch
-            {
-                return null;
-            }
+
+            return null;
         }
     }
 }

@@ -16,7 +16,7 @@ namespace Alyio.Extensions
         /// <returns>A 32-bit signed integer representing the date in 'yyyyMMdd' format.</returns>
         public static int ToDateInt32(this DateTime datetime)
         {
-            return int.Parse(datetime.ToString("yyyyMMdd", CultureInfo.InvariantCulture), CultureInfo.InvariantCulture);
+            return datetime.Year * 10000 + datetime.Month * 100 + datetime.Day;
         }
 
         /// <summary>
@@ -60,7 +60,7 @@ namespace Alyio.Extensions
             {
                 return s_epoch.AddSeconds(seconds);
             }
-            catch
+            catch (Exception ex) when (ex is ArgumentOutOfRangeException || ex is OverflowException)
             {
                 return null;
             }
