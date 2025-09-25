@@ -3,12 +3,12 @@
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;net8.0;net9.0</TargetFrameworks>
     <LangVersion>12</LangVersion>
-    <Description>Provides extension methods for converting a base data type to another base data type</Description>
+    <Description>Provides a comprehensive set of extension methods for robust and high-performance type conversions across various base data types.</Description>
     <Authors>Jon X</Authors>
     <Copyright>Copyright (c) 2024 Jon X</Copyright>
     <VersionPrefix>2.3.2</VersionPrefix>
     <PackageId>Alyio.Extensions</PackageId>
-    <PackageTags>Extensions;Methods;Converter</PackageTags>
+    <PackageTags>Extensions;Methods;Converter;TypeConversion</PackageTags>
     <PackageProjectUrl>https://github.com/ousiax/Alyio.Extensions</PackageProjectUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageReadmeFile>README.md</PackageReadmeFile>
