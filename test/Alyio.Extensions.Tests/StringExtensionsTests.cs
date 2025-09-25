@@ -83,6 +83,30 @@ namespace Alyio.Extensions.Tests
             Assert.Null("x".ToDateTime(null, CultureInfo.InvariantCulture));
         }
 
+        #if NET5_0_OR_GREATER
+        [Theory]
+        [InlineData("2006-01-02", 2006, 1, 2)]
+        [InlineData("01/02/2006", 2006, 1, 2)]
+        [InlineData("2006-01-02 15:04:05", 2006, 1, 2)] // Time should be omitted
+        [InlineData("January 2, 2006", 2006, 1, 2)]
+        public void ToDateOnly_String_Valid_Should_Convert_Correctly(string input, int year, int month, int day)
+        {
+            var expected = new DateOnly(year, month, day);
+            Assert.Equal(expected, input.ToDateOnly(CultureInfo.InvariantCulture));
+        }
+
+        [Theory]
+        [InlineData(null)]
+        [InlineData("")]
+        [InlineData(" ")]
+        [InlineData("invalid date")]
+        [InlineData("2023-13-01")] // Invalid month
+        public void ToDateOnly_String_Invalid_Should_Return_Null(string? input)
+        {
+            Assert.Null(input.ToDateOnly(CultureInfo.InvariantCulture));
+        }
+#endif
+
         #region ToEnum Tests
 
         [Theory]

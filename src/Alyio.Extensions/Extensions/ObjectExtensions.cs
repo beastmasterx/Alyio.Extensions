@@ -186,10 +186,50 @@ namespace Alyio.Extensions
         /// </param>
         /// <param name="provider">An <see cref="IFormatProvider"/> interface implementation that supplies culture-specific formatting information. Default is <see cref="CultureInfo.InvariantCulture"/></param>
         /// <returns>The date without time equivalent of the value of value, or null if value is null or was not converted successfully.</returns>
+#if NET5_0_OR_GREATER
+        [Obsolete("This method is obsolete. Use ToDateOnly instead for .NET 6 and later.", error: false)]
+#endif
         public static DateTime? ToDate(this object? value, DateTimeStyles? styles = DateTimeStyles.None, IFormatProvider? provider = null)
         {
             return value?.ToDateTime(styles, provider)?.Date;
         }
+
+#if NET5_0_OR_GREATER
+        /// <summary>
+        /// Converts the value of the specified object to an equivalent <see cref="DateOnly"/>.
+        /// </summary>
+        /// <param name="value">An object that supplies the value to convert, or null.</param>
+        /// <param name="provider">An <see cref="IFormatProvider"/> interface implementation that supplies culture-specific formatting information. Default is <see cref="CultureInfo.InvariantCulture"/></param>
+        /// <returns>A <see cref="DateOnly"/> equivalent of the value, or null if conversion fails.</returns>
+        /// <remarks>If the object contains time information, it will be omitted.</remarks>
+        public static DateOnly? ToDateOnly(this object? value, IFormatProvider? provider = null)
+        {
+            provider ??= CultureInfo.InvariantCulture;
+            if (value == null) return null;
+            if (value is DateOnly dateOnlyValue) return dateOnlyValue;
+            if (value is string s) return s.ToDateOnly(provider);
+            try
+            {
+                if (value is DateTime dt)
+                {
+                    return DateOnly.FromDateTime(dt);
+                }
+                else if (value is DateTimeOffset dto)
+                {
+                    return DateOnly.FromDateTime(dto.Date);
+                }
+                else
+                {
+                    var converted = Convert.ToDateTime(value, provider);
+                    return DateOnly.FromDateTime(converted);
+                }
+            }
+            catch (Exception ex) when (ex is FormatException || ex is InvalidCastException || ex is OverflowException)
+            {
+                return null;
+            }
+        }
+#endif
 
         /// <summary>
         /// Converts the value of the specified object to an equivalent enumeration type.

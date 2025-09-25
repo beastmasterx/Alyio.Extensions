@@ -172,6 +172,35 @@ namespace Alyio.Extensions
             return null;
         }
 
+#if NET5_0_OR_GREATER
+        /// <summary>
+        /// Converts the specified string representation to an equivalent <see cref="DateOnly"/>.
+        /// </summary>
+        /// <param name="value">A string that contains a date to convert.</param>
+        /// <param name="provider">An <see cref="IFormatProvider"/> interface implementation that supplies culture-specific formatting information. Default is <see cref="CultureInfo.InvariantCulture"/></param>
+        /// <returns>A <see cref="DateOnly"/> equivalent of the value, or null if conversion fails.</returns>
+        /// <remarks>If the string contains time information, it will be omitted.</remarks>
+        public static DateOnly? ToDateOnly(this string? value, IFormatProvider? provider = null)
+        {
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                return null;
+            }
+            provider ??= CultureInfo.InvariantCulture;
+            if (DateOnly.TryParse(value, provider, DateTimeStyles.None, out DateOnly dateOnly))
+            {
+                return dateOnly;
+            }
+            else if (DateTimeOffset.TryParse(value, provider, DateTimeStyles.None, out DateTimeOffset dateTimeOffset))
+            {
+                (dateOnly, _, _) = dateTimeOffset;
+                return dateOnly;
+            }
+
+            return null;
+        }
+#endif
+
         /// <summary>
         /// Converts the specified string representation to an equivalent enumeration type.
         /// </summary>

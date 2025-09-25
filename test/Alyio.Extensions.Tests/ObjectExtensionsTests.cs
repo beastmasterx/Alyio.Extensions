@@ -92,6 +92,54 @@ namespace Alyio.Extensions.Tests
             Assert.Equal(expected, input.ToStringOrEmpty());
         }
 
+#if NET5_0_OR_GREATER
+        [Fact]
+        public void ToDateOnly_Object_DateOnly_Should_Return_CorrectDateOnly()
+        {
+            var dateOnly = new DateOnly(2006, 1, 2);
+            Assert.Equal(dateOnly, dateOnly.ToDateOnly(CultureInfo.InvariantCulture));
+        }
+
+        [Fact]
+        public void ToDateOnly_Object_DateTime_Should_Return_CorrectDateOnly()
+        {
+            var dateTime = new DateTime(2006, 1, 2, 15, 4, 5);
+            var expected = new DateOnly(2006, 1, 2);
+            Assert.Equal(expected, dateTime.ToDateOnly(CultureInfo.InvariantCulture));
+        }
+
+        [Fact]
+        public void ToDateOnly_Object_DateTimeOffset_Should_Return_CorrectDateOnly()
+        {
+            var dateTimeOffset = new DateTimeOffset(2006, 1, 2, 15, 4, 5, TimeSpan.FromHours(2));
+            var expected = new DateOnly(2006, 1, 2);
+            Assert.Equal(expected, dateTimeOffset.ToDateOnly(CultureInfo.InvariantCulture));
+        }
+
+        [Theory]
+        [InlineData("2006-01-02", 2006, 1, 2)]
+        [InlineData("01/02/2006", 2006, 1, 2)]
+        [InlineData("2006-01-02 15:04:05", 2006, 1, 2)] // Time should be omitted
+        public void ToDateOnly_Object_String_Should_Delegate_To_String_Method(string input, int year, int month, int day)
+        {
+            var expected = new DateOnly(year, month, day);
+            Assert.Equal(expected, input.ToDateOnly(CultureInfo.InvariantCulture));
+        }
+
+        [Theory]
+        [InlineData(null)]
+        [InlineData("")]
+        [InlineData(" ")]
+        [InlineData(123)] // Integer
+        [InlineData(123.45)] // Double
+        [InlineData(FileMode.Open)] // Enum
+        [InlineData("invalid date")]
+        public void ToDateOnly_Object_Invalid_Values_Should_Return_Null(object? input)
+        {
+            Assert.Null(input.ToDateOnly(CultureInfo.InvariantCulture));
+        }
+#endif
+
         #region ToEnum Tests
 
         [Theory]
