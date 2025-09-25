@@ -22,32 +22,19 @@ namespace Alyio.Extensions
         {
             provider ??= CultureInfo.InvariantCulture;
 
-            if (value == null)
-            {
-                return false;
-            }
+            if (value == null) return false;
+            if (value is bool boolValue) return boolValue;
+            if (value is string s) return s.ToBoolean();
 
-            if (value is bool boolValue)
+            try
             {
-                return boolValue;
+                return Convert.ToBoolean(value, provider);
             }
-
-            if (value is IConvertible converter)
+            catch (Exception ex) when (ex is FormatException || ex is InvalidCastException || ex is OverflowException)
             {
-                try
-                {
-                    return converter.ToBoolean(provider);
-                }
-                catch
-                {
-                    if (value.ToDouble(provider) is double d1)
-                    {
-                        return d1 != 0D;
-                    }
-                }
+                // Fallback to the string extension's logic for numeric-like booleans
+                return value.ToString()?.ToBoolean() ?? false;
             }
-
-            return value.ToDouble(provider) is double d2 ? d2 != 0D : value.ToString()?.ToBoolean() ?? false;
         }
 
         /// <summary>
@@ -75,29 +62,18 @@ namespace Alyio.Extensions
         {
             provider ??= CultureInfo.InvariantCulture;
 
-            if (value == null)
+            if (value == null) return null;
+            if (value is int intValue) return intValue;
+            if (value is string s) return s.ToInt32(provider);
+
+            try
+            {
+                return Convert.ToInt32(value, provider);
+            }
+            catch (Exception ex) when (ex is FormatException || ex is InvalidCastException || ex is OverflowException)
             {
                 return null;
             }
-
-            if (value is int intValue)
-            {
-                return intValue;
-            }
-
-            if (value is IConvertible converter)
-            {
-                try
-                {
-                    return converter.ToInt32(provider);
-                }
-                catch
-                {
-                    return value.ToString()?.ToInt32(provider);
-                }
-            }
-
-            return value.ToString()?.ToInt32(provider);
         }
 
         /// <summary>
@@ -110,29 +86,18 @@ namespace Alyio.Extensions
         {
             provider ??= CultureInfo.InvariantCulture;
 
-            if (value == null)
+            if (value == null) return null;
+            if (value is long longValue) return longValue;
+            if (value is string s) return s.ToInt64(provider);
+
+            try
+            {
+                return Convert.ToInt64(value, provider);
+            }
+            catch (Exception ex) when (ex is FormatException || ex is InvalidCastException || ex is OverflowException)
             {
                 return null;
             }
-
-            if (value is long longValue)
-            {
-                return longValue;
-            }
-
-            if (value is IConvertible converter)
-            {
-                try
-                {
-                    return converter.ToInt64(provider);
-                }
-                catch
-                {
-                    return value.ToString()?.ToInt64(provider);
-                }
-            }
-
-            return value.ToString()?.ToInt64(provider);
         }
 
         /// <summary>
@@ -145,29 +110,18 @@ namespace Alyio.Extensions
         {
             provider ??= CultureInfo.InvariantCulture;
 
-            if (value == null)
+            if (value == null) return null;
+            if (value is double doubleValue) return doubleValue;
+            if (value is string s) return s.ToDouble(provider);
+
+            try
+            {
+                return Convert.ToDouble(value, provider);
+            }
+            catch (Exception ex) when (ex is FormatException || ex is InvalidCastException || ex is OverflowException)
             {
                 return null;
             }
-
-            if (value is double doubleValue)
-            {
-                return doubleValue;
-            }
-
-            if (value is IConvertible converter)
-            {
-                try
-                {
-                    return converter.ToDouble(provider);
-                }
-                catch
-                {
-                    return value.ToString()?.ToDouble(provider);
-                }
-            }
-
-            return value.ToString()?.ToDouble(provider);
         }
 
         /// <summary>
@@ -180,29 +134,18 @@ namespace Alyio.Extensions
         {
             provider ??= CultureInfo.InvariantCulture;
 
-            if (value == null)
+            if (value == null) return null;
+            if (value is decimal decimalValue) return decimalValue;
+            if (value is string s) return s.ToDecimal(provider);
+
+            try
+            {
+                return Convert.ToDecimal(value, provider);
+            }
+            catch (Exception ex) when (ex is FormatException || ex is InvalidCastException || ex is OverflowException)
             {
                 return null;
             }
-
-            if (value is decimal decimalValue)
-            {
-                return decimalValue;
-            }
-
-            if (value is IConvertible converter)
-            {
-                try
-                {
-                    return converter.ToDecimal(provider);
-                }
-                catch
-                {
-                    return value.ToString()?.ToDecimal(provider);
-                }
-            }
-
-            return value.ToString()?.ToDecimal(provider);
         }
 
         /// <summary>
@@ -219,29 +162,18 @@ namespace Alyio.Extensions
         {
             provider ??= CultureInfo.InvariantCulture;
 
-            if (value == null)
+            if (value == null) return null;
+            if (value is DateTime dateTimeValue) return dateTimeValue;
+            if (value is string s) return s.ToDateTime(styles, provider);
+
+            try
+            {
+                return Convert.ToDateTime(value, provider);
+            }
+            catch (Exception ex) when (ex is FormatException || ex is InvalidCastException || ex is OverflowException)
             {
                 return null;
             }
-
-            if (value is DateTime dateTimeValue)
-            {
-                return dateTimeValue;
-            }
-
-            if (value is IConvertible converter)
-            {
-                try
-                {
-                    return converter.ToDateTime(provider);
-                }
-                catch
-                {
-                    return value.ToString()?.ToDateTime(styles, provider);
-                }
-            }
-
-            return value.ToString()?.ToDateTime(styles, provider);
         }
 
         /// <summary>
@@ -277,3 +209,4 @@ namespace Alyio.Extensions
         }
     }
 }
+

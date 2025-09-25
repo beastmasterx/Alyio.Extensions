@@ -86,7 +86,7 @@ public static class DateTimeExtensions
         {
             return s_epoch.AddSeconds(seconds);
         }
-        catch
+        catch (Exception ex) when (ex is ArgumentOutOfRangeException || ex is OverflowException)
         {
             return null;
         }

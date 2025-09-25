@@ -12,9 +12,16 @@ namespace Alyio.Extensions
         /// </summary>
         /// <param name="s">A string containing the value to convert.</param>
         /// <returns>
-        /// true if value is equal to <see cref="bool.TrueString"/> (case-insensitive);
-        /// false if value is equal to <see cref="bool.FalseString"/> (case-insensitive) or null;
-        /// otherwise false.
+        /// <para>
+        /// For string values, returns true if the value is equal to <see cref="bool.TrueString"/> (case-insensitive);
+        /// returns false if the value is equal to <see cref="bool.FalseString"/> (case-insensitive).
+        /// </para>
+        /// <para>
+        /// For numeric string values, returns false if the value is "0"; returns true for any other non-zero number.
+        /// </para>
+        /// <para>
+        /// Returns false for null or any other string.
+        /// </para>
         /// </returns>
         public static bool ToBoolean(this string? s)
         {
