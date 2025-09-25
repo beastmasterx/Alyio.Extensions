@@ -1,5 +1,6 @@
 // MIT License
 
+using System.Globalization;
 using Xunit;
 
 namespace Alyio.Extensions.Tests
@@ -71,19 +72,34 @@ namespace Alyio.Extensions.Tests
         }
 
         [Fact]
-        public void ToDateTime_Should_Convert_Correctly()
+        public void ToDateTimeOffset_Should_Convert_Correctly()
         {
-            var now = new DateTime(2021, 12, 13, 14, 15, 16);
-            var nowString = now.ToString(CultureInfo.InvariantCulture);
+            // Null, empty, or whitespace input
+            Assert.Null(((string?)null).ToDateTimeOffset());
+            Assert.Null("".ToDateTimeOffset());
+            Assert.Null(" ".ToDateTimeOffset());
 
-            Assert.Equal(now, nowString.ToDateTime(null, CultureInfo.InvariantCulture));
-            Assert.Null(((string?)null).ToDateTime(null, CultureInfo.InvariantCulture));
-            Assert.Null("".ToDateTime(null, CultureInfo.InvariantCulture));
-            Assert.Null(" ".ToDateTime(null, CultureInfo.InvariantCulture));
-            Assert.Null("x".ToDateTime(null, CultureInfo.InvariantCulture));
+            // Valid string inputs with offset
+            var expectedDto = new DateTimeOffset(2006, 1, 2, 15, 4, 5, TimeSpan.FromHours(2));
+            Assert.Equal(expectedDto, "2006-01-02T15:04:05+02:00".ToDateTimeOffset(styles: DateTimeStyles.None, provider: CultureInfo.InvariantCulture));
+            Assert.Equal(expectedDto, "01/02/2006 3:04:05 PM +02:00".ToDateTimeOffset(styles: DateTimeStyles.None, provider: CultureInfo.InvariantCulture));
+
+            // Valid string inputs without offset, assuming local
+            var dateStringNoOffset = "2006-01-02 15:04:05";
+            var expectedDtoLocal = new DateTimeOffset(new DateTime(2006, 1, 2, 15, 4, 5), TimeZoneInfo.Local.GetUtcOffset(new DateTime(2006, 1, 2, 15, 4, 5)));
+            Assert.Equal(expectedDtoLocal, dateStringNoOffset.ToDateTimeOffset(styles: DateTimeStyles.None, provider: CultureInfo.InvariantCulture));
+
+            // Valid string inputs without offset, assuming UTC
+            var dateStringAssumeUtc = "2006-01-02 15:04:05";
+            var expectedDtoUtc = new DateTimeOffset(2006, 1, 2, 15, 4, 5, TimeSpan.Zero);
+            Assert.Equal(expectedDtoUtc, dateStringAssumeUtc.ToDateTimeOffset(styles: DateTimeStyles.AssumeUniversal, provider: CultureInfo.InvariantCulture));
+
+            // Invalid string input
+            Assert.Null("invalid date".ToDateTimeOffset(styles: DateTimeStyles.None, provider: CultureInfo.InvariantCulture));
+            Assert.Null("2006-13-01".ToDateTimeOffset(styles: DateTimeStyles.None, provider: CultureInfo.InvariantCulture)); // Invalid month
         }
 
-        #if NET5_0_OR_GREATER
+#if NET5_0_OR_GREATER
         [Theory]
         [InlineData("2006-01-02", 2006, 1, 2)]
         [InlineData("01/02/2006", 2006, 1, 2)]

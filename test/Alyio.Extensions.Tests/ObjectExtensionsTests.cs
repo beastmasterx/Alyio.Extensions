@@ -1,5 +1,6 @@
 // MIT License
 
+using System.Globalization;
 using Xunit;
 
 namespace Alyio.Extensions.Tests
@@ -76,12 +77,76 @@ namespace Alyio.Extensions.Tests
         }
 
         [Fact]
-        public void ToDate_Should_Return_Date_Part_Only()
+        public void ToDateTimeOffset_Should_Convert_Correctly()
         {
-            var now = DateTime.Now;
-            Assert.Equal(now.Date, now.ToDate(null, CultureInfo.InvariantCulture));
-            Assert.Null(((object?)null).ToDate(null, CultureInfo.InvariantCulture));
+            // 1. Null input
+            Assert.Null(((object?)null).ToDateTimeOffset(styles: DateTimeStyles.None, provider: CultureInfo.InvariantCulture));
+
+            // 2. DateTimeOffset input
+            var dto = new DateTimeOffset(2006, 1, 2, 15, 4, 5, TimeSpan.FromHours(2));
+            Assert.Equal(dto, dto.ToDateTimeOffset(styles: DateTimeStyles.None, provider: CultureInfo.InvariantCulture));
+
+            // 3. String input (delegates to StringExtensions)
+            var dateStringRFC3339 = "2006-01-02T15:04:05+02:00"; // Corrected RFC3339 format
+            Assert.Equal(dto, dateStringRFC3339.ToDateTimeOffset(styles: DateTimeStyles.None, provider: CultureInfo.InvariantCulture));
+
+            var dateStringDateTime = "2006-01-02 15:04:05";
+            var expectedFromDateTimeString = new DateTimeOffset(new DateTime(2006, 1, 2, 15, 4, 5), TimeZoneInfo.Local.GetUtcOffset(new DateTime(2006, 1, 2, 15, 4, 5)));
+            Assert.Equal(expectedFromDateTimeString, dateStringDateTime.ToDateTimeOffset(styles: DateTimeStyles.None, provider: CultureInfo.InvariantCulture));
+
+            // 4. DateTime input
+            // Utc
+            var dtUtc = new DateTime(2006, 1, 2, 15, 4, 5, DateTimeKind.Utc);
+            Assert.Equal(new DateTimeOffset(dtUtc), dtUtc.ToDateTimeOffset(styles: DateTimeStyles.None, provider: CultureInfo.InvariantCulture));
+
+            // Local
+            var dtLocal = new DateTime(2006, 1, 2, 15, 4, 5, DateTimeKind.Local);
+            Assert.Equal(new DateTimeOffset(dtLocal), dtLocal.ToDateTimeOffset(styles: DateTimeStyles.None, provider: CultureInfo.InvariantCulture));
+
+            // Unspecified (behaves like Local when converted to DateTimeOffset)
+            var dtUnspecified = new DateTime(2006, 1, 2, 15, 4, 5, DateTimeKind.Unspecified);
+            Assert.Equal(new DateTimeOffset(dtUnspecified), dtUnspecified.ToDateTimeOffset(styles: DateTimeStyles.None, provider: CultureInfo.InvariantCulture));
+
+            // 5. Other convertible types (e.g., long, double)
+            // Unix timestamp (seconds)
+            var unixSeconds = 1136214245L; // 2006-01-02 15:04:05 UTC
+            var expectedDtoFromLong = DateTimeOffset.FromUnixTimeSeconds(unixSeconds);
+            Assert.Equal(expectedDtoFromLong, unixSeconds.ToDateTimeOffset(styles: DateTimeStyles.None, provider: CultureInfo.InvariantCulture));
+
+            // Double (OLE Automation Date) - not directly supported by Convert.ToDateTime for DateTimeOffset
+            // Convert.ToDateTime(double) treats it as OLE Automation Date.
+            // 38719.627835648148 is 2006-01-02 15:04:05
+            var oleAutomationDate = 38719.627835648148;
+            var expectedDtoFromDouble = new DateTimeOffset(DateTime.FromOADate(oleAutomationDate));
+            Assert.Equal(expectedDtoFromDouble, oleAutomationDate.ToDateTimeOffset(styles: DateTimeStyles.None, provider: CultureInfo.InvariantCulture));
+
+            // 6. Invalid input
+            Assert.Null("invalid date".ToDateTimeOffset(styles: DateTimeStyles.None, provider: CultureInfo.InvariantCulture));
+            Assert.Null(new object().ToDateTimeOffset(styles: DateTimeStyles.None, provider: CultureInfo.InvariantCulture)); // Arbitrary object
         }
+
+        [Fact]
+        public void ToDateTimeOffset_With_Styles_And_Provider_Should_Convert_Correctly()
+        {
+            var provider = CultureInfo.GetCultureInfo("en-US");
+
+            // String with specific format and styles
+            var dateString = "01/02/2006 03:04:05 PM +02:00";
+            var expectedDto = new DateTimeOffset(2006, 1, 2, 15, 4, 5, TimeSpan.FromHours(2));
+            Assert.Equal(expectedDto, dateString.ToDateTimeOffset(DateTimeStyles.None, provider));
+
+            // String without offset, assume local
+            var dateStringNoOffset = "01/02/2006 03:04:05 PM";
+            var expectedDtoLocal = new DateTimeOffset(new DateTime(2006, 1, 2, 15, 4, 5), TimeZoneInfo.Local.GetUtcOffset(new DateTime(2006, 1, 2, 15, 4, 5)));
+            Assert.Equal(expectedDtoLocal, dateStringNoOffset.ToDateTimeOffset(DateTimeStyles.None, provider));
+
+            // String without offset, assume UTC
+            var dateStringAssumeUtc = "01/02/2006 03:04:05 PM";
+            var expectedDtoUtc = new DateTimeOffset(2006, 1, 2, 15, 4, 5, TimeSpan.Zero);
+            Assert.Equal(expectedDtoUtc, dateStringAssumeUtc.ToDateTimeOffset(DateTimeStyles.AssumeUniversal, provider));
+        }
+
+
 
         [Theory]
         [InlineData("hello", "hello")]

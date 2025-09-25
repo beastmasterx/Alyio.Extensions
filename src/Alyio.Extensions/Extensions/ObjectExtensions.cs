@@ -177,6 +177,52 @@ namespace Alyio.Extensions
         }
 
         /// <summary>
+        /// Converts the value of the specified object to a date and time with an offset.
+        /// </summary>
+        /// <param name="value">An object that supplies the value to convert, or null.</param>
+        /// <param name="styles">
+        /// A bitwise combination of enumeration values that defines how to interpret the parsed date in relation to the current time zone or the current date.
+        /// A typical value to specify is <see cref="System.Globalization.DateTimeStyles.None"/>.
+        /// </param>
+        /// <param name="provider">An <see cref="IFormatProvider"/> interface implementation that supplies culture-specific formatting information. Default is <see cref="CultureInfo.InvariantCulture"/></param>
+        /// <returns>The date and time with an offset equivalent of the value of value, or null if value is null or was not converted successfully.</returns>
+        /// <remarks>
+        /// If <paramref name="value"/> is a <see cref="string"/>, the conversion behavior is delegated to <see cref="StringExtensions.ToDateTimeOffset(string, DateTimeStyles?, IFormatProvider?)"/>.
+        /// If <paramref name="value"/> is a <see cref="DateTime"/>, the offset is determined by its <see cref="DateTime.Kind"/> property:
+        /// <list type="bullet">
+        /// <item><description><see cref="DateTimeKind.Utc"/> results in a UTC offset (+00:00).</description></item>
+        /// <item><description><see cref="DateTimeKind.Local"/> or <see cref="DateTimeKind.Unspecified"/> results in the local system's time zone offset.</description></item>
+        /// </list>
+        /// For other convertible types, the value is first converted to <see cref="DateTime"/> using <see cref="Convert.ToDateTime(object, IFormatProvider)"/>,
+        /// which typically results in an <see cref="DateTimeKind.Unspecified"/> kind, and then converted to <see cref="DateTimeOffset"/> using the local system's time zone offset.
+        /// </remarks>
+        public static DateTimeOffset? ToDateTimeOffset(this object? value, DateTimeStyles? styles = DateTimeStyles.None, IFormatProvider? provider = null)
+        {
+            provider ??= CultureInfo.InvariantCulture;
+            if (value == null) return null;
+            if (value is DateTimeOffset dto) return dto;
+            if (value is string s) return s.ToDateTimeOffset(styles, provider);
+            if (value is long l) return DateTimeOffset.FromUnixTimeSeconds(l); // Handle Unix seconds
+            if (value is double d) return new DateTimeOffset(DateTime.FromOADate(d)); // Handle OLE Automation Date
+            try
+            {
+                if (value is DateTime dt)
+                {
+                    return new DateTimeOffset(dt);
+                }
+                else
+                {
+                    var converted = Convert.ToDateTime(value, provider);
+                    return new DateTimeOffset(converted);
+                }
+            }
+            catch (Exception ex) when (ex is FormatException || ex is InvalidCastException || ex is OverflowException || ex is ArgumentOutOfRangeException)
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
         /// Converts the value of the specified object to a date without time.
         /// </summary>
         /// <param name="value">An object that supplies the value to convert, or null.</param>

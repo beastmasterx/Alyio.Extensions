@@ -172,6 +172,41 @@ namespace Alyio.Extensions
             return null;
         }
 
+        /// <summary>
+        /// Converts the specified string representation of a date and time to an equivalent date and time with an offset, using the specified culture-specific formatting information.
+        /// </summary>
+        /// <param name="value">A string that contains a date and time to convert.</param>
+        /// <param name="styles">
+        /// A bitwise combination of enumeration values that defines how to interpret the parsed date in relation to the current time zone or the current date.
+        /// A typical value to specify is <see cref="DateTimeStyles.None"/>.
+        /// </param>
+        /// <param name="provider">An <see cref="IFormatProvider"/> interface implementation that supplies culture-specific formatting information. Default is <see cref="CultureInfo.InvariantCulture"/></param>
+        /// <returns>
+        /// The date and time with an offset equivalent of the value of value, or null if:
+        /// - value is null, empty, or contains only whitespace
+        /// - value is not in the correct format
+        /// - value represents a date and time less than <see cref="DateTimeOffset.MinValue"/> or greater than <see cref="DateTimeOffset.MaxValue"/>
+        /// </returns>
+        /// <remarks>
+        /// This method uses <see cref="DateTimeOffset.TryParse"/>. If the input string <paramref name="value"/> contains offset information, it is used.
+        /// If no offset information is present, the offset is determined by the <paramref name="styles"/> parameter.
+        /// If <paramref name="styles"/> is <see cref="DateTimeStyles.None"/>, the local system's time zone offset is used.
+        /// </remarks>
+        public static DateTimeOffset? ToDateTimeOffset(this string? value, DateTimeStyles? styles = DateTimeStyles.None, IFormatProvider? provider = null)
+        {
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                return null;
+            }
+
+            if (DateTimeOffset.TryParse(value, provider ?? CultureInfo.InvariantCulture, styles ?? DateTimeStyles.None, out DateTimeOffset result))
+            {
+                return result;
+            }
+
+            return null;
+        }
+
 #if NET5_0_OR_GREATER
         /// <summary>
         /// Converts the specified string representation to an equivalent <see cref="DateOnly"/>.
