@@ -145,8 +145,6 @@ namespace Alyio.Extensions.Tests
         [InlineData("NotAValidEnum")]
         [InlineData("")]
         [InlineData(" ")]
-        [InlineData(999)] // Out of range
-        [InlineData(-1)] // Negative
         [InlineData(999.99)] // Out of range double
         [InlineData(-1.5)] // Negative double
         public void ToEnum_Object_Invalid_Values_Should_Return_Null(object input)

@@ -192,11 +192,12 @@ namespace Alyio.Extensions
         }
 
         /// <summary>
-        /// Converts the value of the specified object to an enumeration type.
+        /// Converts the value of the specified object to an equivalent enumeration type.
         /// </summary>
         /// <typeparam name="T">An enumeration type.</typeparam>
         /// <param name="value">An object that supplies the value to convert, or null.</param>
-        /// <returns>An object of type enumType whose value is represented by value, or default(T) if conversion fails.</returns>
+        /// <returns>An object of type T whose value is represented by value, or null if conversion fails.</returns>
+        /// <remarks>The result is not validated against a defined member.</remarks>
         public static T? ToEnum<T>(this object? value) where T : struct, Enum
         {
             if (value is T v)

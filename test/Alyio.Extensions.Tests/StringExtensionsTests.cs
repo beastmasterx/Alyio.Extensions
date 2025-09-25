@@ -136,18 +136,6 @@ namespace Alyio.Extensions.Tests
             Assert.Null(input.ToEnum<DayOfWeek>());
         }
 
-        [Theory]
-        [InlineData("7")] // Out of range for DayOfWeek
-        [InlineData("-1")] // Negative value
-        [InlineData("999")] // Way out of range
-        [InlineData("2147483647")] // int.MaxValue
-        [InlineData("-2147483648")] // int.MinValue
-        public void ToEnum_String_Out_Of_Range_Numeric_Should_Return_Null(string input)
-        {
-            Assert.Null(input.ToEnum<DayOfWeek>());
-            Assert.Null(input.ToEnum<FileMode>());
-        }
-
         [Fact]
         public void ToEnum_String_With_Flags_Enum_Should_Work()
         {

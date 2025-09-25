@@ -173,11 +173,12 @@ namespace Alyio.Extensions
         }
 
         /// <summary>
-        /// Converts the specified string representation of a number to an equivalent enumeration type.
+        /// Converts the specified string representation to an equivalent enumeration type.
         /// </summary>
         /// <typeparam name="T">An enumeration type.</typeparam>
-        /// <param name="value">A string that contains an enumeration to convert.</param>
-        /// <returns>An object of type enumType whose value is represented by value, or null if conversion fails.</returns>
+        /// <param name="value">A string that contains the name or numeric value of one or more enumerated constants to convert.</param>
+        /// <returns>An object of type T whose value is represented by value, or null if conversion fails.</returns>
+        /// <remarks>The result is not validated against a defined member.</remarks>
         public static T? ToEnum<T>(this string? value) where T : struct, Enum
         {
             if (string.IsNullOrWhiteSpace(value))
@@ -185,7 +186,7 @@ namespace Alyio.Extensions
                 return null;
             }
 
-            if (Enum.TryParse(value, true, out T result) && Enum.IsDefined(typeof(T), result))
+            if (Enum.TryParse(value, true, out T result))
             {
                 return result;
             }
