@@ -1,0 +1,4 @@
+feat: Add support for .NET 6.0
+
+This commit introduces support for .NET 6.0 to the project.
+It also includes a fix for the `ToDateOnly` extension method and updates the test project's dependencies.

@@ -226,10 +226,9 @@ namespace Alyio.Extensions
             {
                 return dateOnly;
             }
-            else if (DateTimeOffset.TryParse(value, provider, DateTimeStyles.None, out DateTimeOffset dateTimeOffset))
+            else if (DateTime.TryParse(value, provider, DateTimeStyles.None, out DateTime dateTime))
             {
-                (dateOnly, _, _) = dateTimeOffset;
-                return dateOnly;
+                return DateOnly.FromDateTime(dateTime);
             }
 
             return null;
